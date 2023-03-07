@@ -20,4 +20,8 @@ public class Orders {
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime docDate;
+
+    public Orders(LocalDateTime docDate) {
+        this.setDocDate(LocalDateTime.now());
+    }
 }
