@@ -22,6 +22,14 @@ public class ProductController {
         return goods;
     }
 
+    @PutMapping("/update")
+    public Goods updateNewProduct(@RequestBody Goods goods) {
+
+        service.createNewProduct(goods);
+
+        return goods;
+    }
+
     @GetMapping("/all")
     public List<Goods> getAllProduct() {
 
