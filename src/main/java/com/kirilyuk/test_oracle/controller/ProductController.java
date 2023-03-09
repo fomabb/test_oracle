@@ -56,4 +56,10 @@ public class ProductController {
 
         return service.getByIdOrders(id);
     }
+
+    @GetMapping("/weight")
+    public double getWeight() {
+
+        return service.weight();
+    }
 }

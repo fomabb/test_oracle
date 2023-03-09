@@ -24,9 +24,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createNewProduct(List<Goods> goods) {
 
-        goods.forEach(g -> g.setOrders(new Orders(LocalDateTime.now())));
-
-//        goods.stream().map(goods1 -> new Orders(goods1.getId()))
+//        goods.forEach(g -> g.setOrders(new Orders(LocalDateTime.now())));
 
         dao.saveAllAndFlush(goods);
     }
@@ -46,6 +44,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<Goods> getGoodsById(Long id) {
 
+
         return dao.findById(id);
     }
 
@@ -61,5 +60,11 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Orders> getByIdOrders(Long id) {
 
         return ordersDao.findById(id);
+    }
+
+    @Override
+    public double weight() {
+
+        return ordersDao.findAll().stream().count() / dao.findAll().stream().count();
     }
 }

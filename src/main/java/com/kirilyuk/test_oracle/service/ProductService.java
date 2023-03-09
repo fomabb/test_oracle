@@ -19,4 +19,6 @@ public interface ProductService {
     void update(Goods goods);
 
     Optional<Orders> getByIdOrders(Long id);
+
+    double weight();
 }
