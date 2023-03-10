@@ -31,9 +31,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveOrders(Long id, Orders orders) {
 
-        getGoodsById(id).ifPresent(goods -> new Orders());
+        Goods goods = getGoodsById(id).orElse(null);
 
-        orders.addGoodsToDepartment(getGoodsById(id).orElse(null));
+        orders.addGoodsToDepartment(goods);
 
         orders.setDocDate(LocalDateTime.now());
 
