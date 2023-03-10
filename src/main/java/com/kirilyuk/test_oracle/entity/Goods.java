@@ -31,7 +31,7 @@ public class Goods {
     @Min(value = 1, message = "product is not exist")
     private long quantity ;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Orders orders;
 

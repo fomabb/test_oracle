@@ -1,6 +1,6 @@
 package com.kirilyuk.test_oracle.service;
 
-import com.kirilyuk.test_oracle.dto.OrdersRaportDTO;
+import com.kirilyuk.test_oracle.dto.OrdersReportDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 
@@ -25,5 +25,7 @@ public interface ProductService {
 
     List<Orders> getAllOrdersById(Long id);
 
-    List<OrdersRaportDTO> getDate(String text);
+    List<Orders> getDate(String text);
+
+    void saveOrders(Orders orders);
 }

@@ -1,6 +1,6 @@
 package com.kirilyuk.test_oracle.controller;
 
-import com.kirilyuk.test_oracle.dto.OrdersRaportDTO;
+import com.kirilyuk.test_oracle.dto.OrdersReportDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
@@ -25,6 +25,14 @@ public class ProductController {
         service.createNewProduct(goods);
 
         return goods;
+    }
+
+    @PostMapping("/order/save")
+    public Orders saveOrders(@RequestBody Orders orders) {
+
+        service.saveOrders(orders);
+
+        return orders;
     }
 
 
@@ -73,7 +81,7 @@ public class ProductController {
     }
 
     @GetMapping("/date")
-    public List<OrdersRaportDTO> getDate(@RequestParam String text) {
+    public List<Orders> getDate(@RequestParam String text) {
 
         return service.getDate(text);
     }

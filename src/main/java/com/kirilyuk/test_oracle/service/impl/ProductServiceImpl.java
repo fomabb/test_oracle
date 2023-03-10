@@ -2,11 +2,12 @@ package com.kirilyuk.test_oracle.service.impl;
 
 import com.kirilyuk.test_oracle.dao.OrdersDAO;
 import com.kirilyuk.test_oracle.dao.ProductDAO;
-import com.kirilyuk.test_oracle.dto.OrdersRaportDTO;
+import com.kirilyuk.test_oracle.dto.OrdersReportDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,6 +34,24 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void saveOrders(Orders orders) {
+
+        orders.setDocDate(LocalDateTime.now());
+
+        ordersDao.saveAndFlush(orders);
+    }
+
+    @Override
+    public void update(Goods goods) {
+
+        goods.setOrders(new Orders(LocalDateTime.now()));
+
+        goods.setPrice(goods.getPrice() * goods.getQuantity());
+
+        dao.saveAndFlush(goods);
+    }
+
+    @Override
     public List<Goods> getAllProduct() {
 
         return dao.findAll();
@@ -48,14 +67,6 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Goods> getGoodsById(Long id) {
 
         return dao.findById(id);
-    }
-
-    @Override
-    public void update(Goods goods) {
-
-        goods.setPrice(goods.getPrice() * goods.getQuantity());
-
-        dao.saveAndFlush(goods);
     }
 
     @Override
@@ -77,7 +88,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<OrdersRaportDTO> getDate(String text) {
+    public List<Orders> getDate(String text) {
 
         return ordersDao.getDate(text);
     }
