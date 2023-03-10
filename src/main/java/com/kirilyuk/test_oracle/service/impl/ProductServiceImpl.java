@@ -2,12 +2,10 @@ package com.kirilyuk.test_oracle.service.impl;
 
 import com.kirilyuk.test_oracle.dao.OrdersDAO;
 import com.kirilyuk.test_oracle.dao.ProductDAO;
-import com.kirilyuk.test_oracle.dto.OrdersReportDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
     public void createNewProduct(List<Goods> goods) {
 
 
-        goods.forEach(g -> g.setOrders(new Orders(LocalDateTime.now())));
+//        goods.forEach(g -> g.setOrders(new Orders(LocalDateTime.now())));
 
         dao.saveAllAndFlush(goods);
     }
@@ -38,13 +36,14 @@ public class ProductServiceImpl implements ProductService {
 
         orders.setDocDate(LocalDateTime.now());
 
+
         ordersDao.saveAndFlush(orders);
     }
 
     @Override
     public void update(Goods goods) {
 
-        goods.setOrders(new Orders(LocalDateTime.now()));
+//        goods.setOrders(new Orders(LocalDateTime.now()));
 
         goods.setPrice(goods.getPrice() * goods.getQuantity());
 
