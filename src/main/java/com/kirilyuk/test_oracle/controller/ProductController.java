@@ -1,8 +1,10 @@
 package com.kirilyuk.test_oracle.controller;
 
+import com.kirilyuk.test_oracle.dto.OrdersRaportDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Valid
 public class ProductController {
 
     private final ProductService service;
@@ -57,9 +60,21 @@ public class ProductController {
         return service.getByIdOrders(id);
     }
 
+    @GetMapping("/orders/all/{id}")
+    public List<Orders> getAllOrdersById(@PathVariable("id") Long id) {
+
+        return service.getAllOrdersById(id);
+    }
+
     @GetMapping("/weight")
     public double getWeight() {
 
         return service.weight();
+    }
+
+    @GetMapping("/date")
+    public List<OrdersRaportDTO> getDate(@RequestParam String text) {
+
+        return service.getDate(text);
     }
 }

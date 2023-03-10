@@ -1,5 +1,6 @@
 package com.kirilyuk.test_oracle.service;
 
+import com.kirilyuk.test_oracle.dto.OrdersRaportDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 
@@ -21,4 +22,8 @@ public interface ProductService {
     Optional<Orders> getByIdOrders(Long id);
 
     double weight();
+
+    List<Orders> getAllOrdersById(Long id);
+
+    List<OrdersRaportDTO> getDate(String text);
 }

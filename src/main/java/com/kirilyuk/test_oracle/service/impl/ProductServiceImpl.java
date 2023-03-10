@@ -2,6 +2,7 @@ package com.kirilyuk.test_oracle.service.impl;
 
 import com.kirilyuk.test_oracle.dao.OrdersDAO;
 import com.kirilyuk.test_oracle.dao.ProductDAO;
+import com.kirilyuk.test_oracle.dto.OrdersRaportDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +26,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createNewProduct(List<Goods> goods) {
 
-//        goods.forEach(g -> g.setOrders(new Orders(LocalDateTime.now())));
+
+        goods.forEach(g -> g.setOrders(new Orders(LocalDateTime.now())));
 
         dao.saveAllAndFlush(goods);
     }
@@ -43,7 +46,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<Goods> getGoodsById(Long id) {
-
 
         return dao.findById(id);
     }
@@ -66,5 +68,17 @@ public class ProductServiceImpl implements ProductService {
     public double weight() {
 
         return ordersDao.findAll().stream().count() / dao.findAll().stream().count();
+    }
+
+    @Override
+    public List<Orders> getAllOrdersById(Long id) {
+
+        return ordersDao.findAllById(Collections.singleton(id));
+    }
+
+    @Override
+    public List<OrdersRaportDTO> getDate(String text) {
+
+        return ordersDao.getDate(text);
     }
 }

@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -22,16 +21,23 @@ public class Orders {
     private Long id;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+//    @CreationTimestamp
     private LocalDateTime docDate;
 
-//    @JsonBackReference
-//    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-//            mappedBy = "orders")
-//    private List<Goods> goods;
+//    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
+//    @UpdateTimestamp
+//    private LocalDateTime updateDocDate;
 
-    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-    mappedBy = "orders")
-    private Set<Card> card;
+
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL
+            , mappedBy = "orders"
+    )
+    private List<Goods> goods;
+
+//    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
+//    mappedBy = "orders")
+//    private Set<Card> card;
 
     public Orders(LocalDateTime docDate) {
         this.setDocDate(LocalDateTime.now());
