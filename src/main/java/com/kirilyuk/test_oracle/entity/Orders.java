@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -38,20 +39,16 @@ public class Orders {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
-    private List<Goods> goods;
+    private Set<Goods> goods;
 
-//    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-//    mappedBy = "orders")
-//    private Set<Card> card;
-
-    public Orders(LocalDateTime docDate) {
-        this.setDocDate(LocalDateTime.now());
-    }
+//    public Orders(LocalDateTime docDate) {
+//        this.setDocDate(LocalDateTime.now());
+//    }
 
     public void addGoodsToDepartment(Goods goods) {
 
         if (this.goods == null) {
-            this.goods = new ArrayList<>();
+            this.goods = new HashSet<>();
         }
         this.goods.add(goods);
     }

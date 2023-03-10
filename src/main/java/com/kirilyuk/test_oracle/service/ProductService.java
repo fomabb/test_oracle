@@ -25,7 +25,6 @@ public interface ProductService {
 
     List<Orders> getAllOrdersById(Long id);
 
-    List<Orders> getDate(String text);
 
-    void saveOrders(Orders orders);
+    void saveOrders(Long id, Orders orders);
 }

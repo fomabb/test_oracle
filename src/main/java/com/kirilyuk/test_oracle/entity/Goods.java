@@ -25,9 +25,10 @@ public class Goods {
     private double price;
 
     @Column(name = "quantity")
-//    @Size(min = 1, message = "product is not exist")
     @Min(value = 1, message = "product is not exist")
     private long quantity ;
+
+//*************************************************************
 
 //    @ManyToOne(cascade = CascadeType.ALL)
 //    @JoinColumn(name = "order_id")

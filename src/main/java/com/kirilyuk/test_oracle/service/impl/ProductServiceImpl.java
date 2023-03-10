@@ -25,17 +25,17 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createNewProduct(List<Goods> goods) {
 
-
-//        goods.forEach(g -> g.setOrders(new Orders(LocalDateTime.now())));
-
         dao.saveAllAndFlush(goods);
     }
 
     @Override
-    public void saveOrders(Orders orders) {
+    public void saveOrders(Long id, Orders orders) {
+
+        getGoodsById(id).ifPresent(goods -> new Orders());
+
+        orders.addGoodsToDepartment(getGoodsById(id).orElse(null));
 
         orders.setDocDate(LocalDateTime.now());
-
 
         ordersDao.saveAndFlush(orders);
     }
@@ -84,11 +84,5 @@ public class ProductServiceImpl implements ProductService {
     public List<Orders> getAllOrdersById(Long id) {
 
         return ordersDao.findAllById(Collections.singleton(id));
-    }
-
-    @Override
-    public List<Orders> getDate(String text) {
-
-        return ordersDao.getDate(text);
     }
 }

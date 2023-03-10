@@ -1,6 +1,5 @@
 package com.kirilyuk.test_oracle.controller;
 
-import com.kirilyuk.test_oracle.dto.OrdersReportDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
@@ -27,10 +26,11 @@ public class ProductController {
         return goods;
     }
 
-    @PostMapping("/order/save")
-    public Orders saveOrders(@RequestBody Orders orders) {
+    @PostMapping("/order/save/{id}")
+    public Orders saveOrders(@PathVariable Long id,
+                             @RequestBody Orders orders) {
 
-        service.saveOrders(orders);
+        service.saveOrders(id, orders);
 
         return orders;
     }
@@ -78,11 +78,5 @@ public class ProductController {
     public double getWeight() {
 
         return service.weight();
-    }
-
-    @GetMapping("/date")
-    public List<Orders> getDate(@RequestParam String text) {
-
-        return service.getDate(text);
     }
 }
