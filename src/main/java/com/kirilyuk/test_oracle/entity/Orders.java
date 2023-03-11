@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Entity
@@ -24,26 +23,11 @@ public class Orders {
     private Long id;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-//    @CreationTimestamp
     private LocalDateTime docDate;
-
-//    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-//    @UpdateTimestamp
-//    private LocalDateTime updateDocDate;
-
-
-//    @JsonBackReference
-//    @OneToMany(cascade = CascadeType.ALL
-//            , mappedBy = "orders"
-//    )
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
     private Set<Goods> goods;
-
-//    public Orders(LocalDateTime docDate) {
-//        this.setDocDate(LocalDateTime.now());
-//    }
 
     public void addGoodsToDepartment(Goods goods) {
 

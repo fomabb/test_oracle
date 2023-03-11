@@ -35,6 +35,15 @@ public class ProductController {
         return orders;
     }
 
+    @PutMapping("/order/update/{id}")
+    public Orders updateOrders(@PathVariable Long id,
+                             @RequestBody Orders orders) {
+
+        service.saveOrders(id, orders);
+
+        return orders;
+    }
+
 
     @PutMapping("/update")
     public Goods updateNewProduct(@RequestBody Goods goods) {
