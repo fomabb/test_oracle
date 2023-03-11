@@ -30,8 +30,8 @@ public class Goods {
 
 //*************************************************************
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "order_id")
-//    private Orders orders;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
+    private Orders orders;
 
 }

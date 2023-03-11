@@ -1,5 +1,6 @@
 package com.kirilyuk.test_oracle.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -32,18 +33,12 @@ public class Orders {
 //    private LocalDateTime updateDocDate;
 
 
-//    @JsonBackReference
-//    @OneToMany(cascade = CascadeType.ALL
-//            , mappedBy = "orders"
-//    )
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    @JsonBackReference
+    @OneToMany(cascade = CascadeType.ALL
+            , mappedBy = "orders"
+    )
     private Set<Goods> goods;
 
-//    public Orders(LocalDateTime docDate) {
-//        this.setDocDate(LocalDateTime.now());
-//    }
 
     public void addGoodsToDepartment(Goods goods) {
 
