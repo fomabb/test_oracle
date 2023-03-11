@@ -26,4 +26,6 @@ public interface ProductService {
 
 
     void saveOrders(Long id, Orders orders);
+
+    boolean addToOrder(Long goodsId, Long orderId);
 }

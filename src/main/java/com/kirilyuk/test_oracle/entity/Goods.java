@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Table(name = "goods")
 @Getter
@@ -27,6 +29,9 @@ public class Goods {
     @Column(name = "quantity")
     @Min(value = 1, message = "product is not exist")
     private long quantity ;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "goods")
+    private List<GoodsInOrder> goodsInOrderList;
 
 //*************************************************************
 

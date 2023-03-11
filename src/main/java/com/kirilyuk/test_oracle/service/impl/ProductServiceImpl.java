@@ -3,6 +3,7 @@ package com.kirilyuk.test_oracle.service.impl;
 import com.kirilyuk.test_oracle.dao.OrdersDAO;
 import com.kirilyuk.test_oracle.dao.ProductDAO;
 import com.kirilyuk.test_oracle.entity.Goods;
+import com.kirilyuk.test_oracle.entity.GoodsInOrder;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +30,38 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void saveOrders(Long id, Orders orders) {
 
-        Goods goods = getGoodsById(id).orElse(null);
+//        Goods goods = getGoodsById(id).orElse(null);
 
-        orders.addGoodsToDepartment(goods);
+//        orders.addGoodsToDepartment(goods);
 
         orders.setDocDate(LocalDateTime.now());
 
         ordersDao.saveAndFlush(orders);
+    }
+
+    @Override
+    public boolean addToOrder(Long goodsId, Long orderId) {
+
+        Goods goods = dao.findById(goodsId).orElse(null);
+
+        if (goods == null) {
+            return false;
+        }
+
+        Orders orders = ordersDao.findById(orderId).orElse(null);
+
+        if (orders == null) {
+            return false;
+        }
+
+        GoodsInOrder goodsInOrder = new GoodsInOrder();
+
+        goodsInOrder.setOrders(orders);
+        goodsInOrder.setGoods(goods);
+
+//        dao.saveAndFlush(goodsInOrder);
+
+        return true;
     }
 
     @Override

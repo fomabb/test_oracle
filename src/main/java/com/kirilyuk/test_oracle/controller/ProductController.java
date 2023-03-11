@@ -44,7 +44,6 @@ public class ProductController {
         return orders;
     }
 
-
     @PutMapping("/update")
     public Goods updateNewProduct(@RequestBody Goods goods) {
 
