@@ -39,9 +39,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void deleteGoods(Long id) {
+
+        dao.deleteById(id);
+    }
+
+    @Override
     public void update(Goods goods) {
 
         goods.setPrice(goods.getPrice() * goods.getQuantity());
+
+        if (goods.getQuantity() == 0) {
+            deleteGoods(goods.getId());
+        }
 
         dao.saveAndFlush(goods);
     }

@@ -25,7 +25,7 @@ public class Goods {
     private double price;
 
     @Column(name = "quantity")
-    @Min(value = 1, message = "product is not exist")
+//    @Min(value = 1, message = "product is not exist")
     private long quantity ;
 
 //*************************************************************

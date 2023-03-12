@@ -13,7 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@Valid
+//@Valid
 public class ProductController {
 
     private final ProductService service;
@@ -87,5 +87,11 @@ public class ProductController {
     public double getWeight() {
 
         return service.weight();
+    }
+
+    @DeleteMapping("/delete/goods/{id}")
+    public void deleteGoods(@PathVariable("id") Long id) {
+
+        service.deleteGoods(id);
     }
 }
