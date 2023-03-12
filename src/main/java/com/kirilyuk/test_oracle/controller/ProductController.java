@@ -18,7 +18,7 @@ public class ProductController {
 
 //    ***************Goods***************
 
-    @PostMapping("/save")
+    @PostMapping("/goods/save")
     public List<Goods> createNewProduct(@RequestBody List<Goods> goods) {
 
         service.createNewProduct(goods);
@@ -26,7 +26,7 @@ public class ProductController {
         return goods;
     }
 
-    @PutMapping("/update")
+    @PutMapping("/goods/update")
     public Goods updateNewProduct(@RequestBody Goods goods) {
 
         service.update(goods);
@@ -34,13 +34,13 @@ public class ProductController {
         return goods;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/goods/all")
     public List<Goods> getAllProduct() {
 
         return service.getAllProduct();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/goods/{id}")
     public Optional<Goods> getGoodsById(@PathVariable("id") Long id) {
 
         return service.getGoodsById(id);
@@ -62,25 +62,19 @@ public class ProductController {
         return orders;
     }
 
-    @PutMapping("/order/update/{orderId}/{goodsId}")
-    public String updateOrders(@PathVariable("orderId") Long orderId,
-                               @PathVariable("goodsId") Long goodsId) {
+    @PutMapping("/add/order/{orderId}/goods/{goodsId}")
+    public String addGoodsInOrder(@PathVariable("orderId") Long orderId,
+                                  @PathVariable("goodsId") Long goodsId) {
 
-        service.updateOrder(orderId, goodsId);
+        service.addGoodsInOrder(orderId, goodsId);
 
         return "Request is exist";
     }
 
-    @GetMapping("/orders/{id}")
+    @GetMapping("/order/{id}")
     public Optional<Orders> getOrderById(@PathVariable("id") Long id) {
 
         return service.getOrderById(id);
-    }
-
-    @GetMapping("/orders/all/{id}")
-    public List<Orders> getAllOrdersById(@PathVariable("id") Long id) {
-
-        return service.getAllOrdersById(id);
     }
 
     @GetMapping("/orders")

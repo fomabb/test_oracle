@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateOrder(Long orderId, Long goodsId) {
+    public void addGoodsInOrder(Long orderId, Long goodsId) {
 
         Orders orders = getOrderById(orderId).orElse(null);
 
@@ -96,11 +96,5 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Orders> getOrderById(Long id) {
 
         return ordersDao.findById(id);
-    }
-
-    @Override
-    public List<Orders> getAllOrdersById(Long id) {
-
-        return ordersDao.findAllById(Collections.singleton(id));
     }
 }

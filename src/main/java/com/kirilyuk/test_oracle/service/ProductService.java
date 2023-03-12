@@ -24,13 +24,9 @@ public interface ProductService {
 
     void saveOrder(Orders orders);
 
-    void updateOrder(Long orderId, Long goodsId);
+    void addGoodsInOrder(Long orderId, Long goodsId);
 
     List<Orders> getOrdersTable();
 
     Optional<Orders> getOrderById(Long id);
-
-
-    List<Orders> getAllOrdersById(Long id);
-
 }
