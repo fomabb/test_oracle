@@ -26,20 +26,20 @@ public class ProductController {
         return goods;
     }
 
-    @PostMapping("/order/save/{id}")
-    public Orders saveOrders(@PathVariable Long id,
+    @PostMapping("/order/save/{goodsId}")
+    public Orders saveOrders(@PathVariable Long goodsId,
                              @RequestBody Orders orders) {
 
-        service.saveOrders(id, orders);
+        service.saveOrders(goodsId, orders);
 
         return orders;
     }
 
-    @PutMapping("/order/update/{id}")
-    public Orders updateOrders(@PathVariable Long id,
+    @PutMapping("/order/update/{goodsId}")
+    public Orders updateOrders(@PathVariable Long goodsId,
                              @RequestBody Orders orders) {
 
-        service.saveOrders(id, orders);
+        service.saveOrders(goodsId, orders);
 
         return orders;
     }

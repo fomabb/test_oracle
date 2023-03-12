@@ -26,10 +26,35 @@ public class ProductServiceImpl implements ProductService {
         dao.saveAllAndFlush(goods);
     }
 
-    @Override
-    public void saveOrders(Long id, Orders orders) {
 
-        Goods goods = getGoodsById(id).orElse(null);
+    /*
+    Goods goods = dao.findById(goodsId).orElse(null);
+
+        if (goods == null) {
+            return false;
+        }
+
+        Orders orders = ordersDao.findById(orderId).orElse(null);
+
+        if (orders == null) {
+            return false;
+        }
+
+        GoodsInOrder goodsInOrder = new GoodsInOrder();
+
+        goodsInOrder.setOrders(orders);
+        goodsInOrder.setGoods(goods);
+
+//        dao.saveAndFlush(goodsInOrder);
+
+        return true;
+     */
+
+    @Override
+    public void saveOrders(Long goodsId, Orders orders) {
+
+        Goods goods = getGoodsById(goodsId).orElse(null);
+
 
         orders.addGoodsToDepartment(goods);
 

@@ -25,7 +25,7 @@ public interface ProductService {
     List<Orders> getAllOrdersById(Long id);
 
 
-    void saveOrders(Long id, Orders orders);
+    void saveOrders(Long goodsId, Orders orders);
 
     void deleteGoods(Long id);
 }
