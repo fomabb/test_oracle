@@ -27,7 +27,7 @@ public class Goods {
 //    @Min(value = 1, message = "product is not exist")
     private long quantity ;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders order;
 
