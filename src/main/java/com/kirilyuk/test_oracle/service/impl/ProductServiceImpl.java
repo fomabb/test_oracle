@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveOrders(Long orderId, Long goodsId) {
+    public void updateOrder(Long orderId, Long goodsId) {
 
         Orders orders = getOrderById(orderId).orElse(null);
 

@@ -73,7 +73,7 @@ public class ProductController {
     public String updateOrders(@PathVariable("orderId") Long orderId,
                                @PathVariable("goodsId") Long goodsId) {
 
-        service.saveOrders(orderId, goodsId);
+        service.updateOrder(orderId, goodsId);
 
         return "Request is exist";
     }
