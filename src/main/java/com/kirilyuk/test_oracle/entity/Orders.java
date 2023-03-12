@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "orders")
@@ -23,35 +23,16 @@ public class Orders {
     private Long id;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-//    @CreationTimestamp
     private LocalDateTime docDate;
-
-//    @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-//    @UpdateTimestamp
-//    private LocalDateTime updateDocDate;
-
-
-//    @JsonBackReference
-//    @OneToMany(cascade = CascadeType.ALL
-//            , mappedBy = "orders"
-//    )
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
-    private List<Goods> goods;
-
-//    @OneToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH},
-//    mappedBy = "orders")
-//    private Set<Card> card;
-
-    public Orders(LocalDateTime docDate) {
-        this.setDocDate(LocalDateTime.now());
-    }
+    private Set<Goods> goods = new HashSet<>();
 
     public void addGoodsToDepartment(Goods goods) {
 
         if (this.goods == null) {
-            this.goods = new ArrayList<>();
+            this.goods = new HashSet<>();
         }
         this.goods.add(goods);
     }
