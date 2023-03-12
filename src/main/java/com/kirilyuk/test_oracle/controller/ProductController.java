@@ -6,6 +6,11 @@ import com.kirilyuk.test_oracle.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.xml.crypto.Data;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +73,11 @@ public class ProductController {
 
         service.addGoodsInOrder(orderId, goodsId);
 
-        return "Request is exist";
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String formatDateTime = now.format(formatter);
+
+        return "Product with id:" + goodsId + " added to cart " + formatDateTime;
     }
 
     @GetMapping("/order/{id}")
