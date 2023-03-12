@@ -1,7 +1,6 @@
 package com.kirilyuk.test_oracle.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,7 +23,6 @@ public class Goods {
     @Column(name = "price")
     private double price;
 
-//    @Min(value = 1)
     @Column(name = "quantity")
     private long quantity;
 }
