@@ -23,6 +23,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createNewProduct(List<Goods> goods) {
 
+        goods.forEach(goods1 -> goods1.setQuantity(1));
+
         dao.saveAllAndFlush(goods);
     }
 
@@ -40,6 +42,8 @@ public class ProductServiceImpl implements ProductService {
 
         assert orders != null;
         orders.addGoodsToDepartment(goods);
+
+        orders.setDocDate(LocalDateTime.now());
 
         ordersDao.saveAndFlush(orders);
     }
