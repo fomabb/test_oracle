@@ -1,10 +1,8 @@
 package com.kirilyuk.test_oracle.controller;
 
-import com.kirilyuk.test_oracle.dto.OrdersReportDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,10 +12,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-@Valid
+//@Valid
 public class ProductController {
 
     private final ProductService service;
+
+//    ***************Goods***************
 
     @PostMapping("/save")
     public List<Goods> createNewProduct(@RequestBody List<Goods> goods) {
@@ -26,15 +26,6 @@ public class ProductController {
 
         return goods;
     }
-
-    @PostMapping("/order/save")
-    public Orders saveOrders(@RequestBody Orders orders) {
-
-        service.saveOrders(orders);
-
-        return orders;
-    }
-
 
     @PutMapping("/update")
     public Goods updateNewProduct(@RequestBody Goods goods) {
@@ -50,28 +41,10 @@ public class ProductController {
         return service.getAllProduct();
     }
 
-    @GetMapping("/orders")
-    public List<Orders> getOrdersTable() {
-
-        return service.getOrdersTable();
-    }
-
     @GetMapping("/{id}")
     public Optional<Goods> getGoodsById(@PathVariable("id") Long id) {
 
         return service.getGoodsById(id);
-    }
-
-    @GetMapping("/orders/{id}")
-    public Optional<Orders> getByIdOrders(@PathVariable("id") Long id) {
-
-        return service.getByIdOrders(id);
-    }
-
-    @GetMapping("/orders/all/{id}")
-    public List<Orders> getAllOrdersById(@PathVariable("id") Long id) {
-
-        return service.getAllOrdersById(id);
     }
 
     @GetMapping("/weight")
@@ -80,9 +53,46 @@ public class ProductController {
         return service.weight();
     }
 
-    @GetMapping("/date")
-    public List<Orders> getDate(@RequestParam String text) {
+    @DeleteMapping("/delete/goods/{id}")
+    public void deleteGoods(@PathVariable("id") Long id) {
 
-        return service.getDate(text);
+        service.deleteGoods(id);
+    }
+
+    //    ***************Orders***************
+
+    @PostMapping("/save/order")
+    public Orders saveOrder(@RequestBody Orders orders) {
+
+        service.saveOrder(orders);
+
+        return orders;
+    }
+
+    @PutMapping("/order/update/{orderId}/{goodsId}")
+    public String updateOrders(@PathVariable("orderId") Long orderId,
+                               @PathVariable("goodsId") Long goodsId) {
+
+        service.updateOrder(orderId, goodsId);
+
+        return "Request is exist";
+    }
+
+    @GetMapping("/orders/{id}")
+    public Optional<Orders> getOrderById(@PathVariable("id") Long id) {
+
+        return service.getOrderById(id);
+    }
+
+    @GetMapping("/orders/all/{id}")
+    public List<Orders> getAllOrdersById(@PathVariable("id") Long id) {
+
+        return service.getAllOrdersById(id);
+    }
+
+    @GetMapping("/orders")
+    public List<Orders> getOrdersTable() {
+
+        return service.getOrdersTable();
     }
 }

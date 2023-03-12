@@ -10,9 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -25,17 +23,32 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createNewProduct(List<Goods> goods) {
 
-
-//        goods.forEach(g -> g.setOrders(new Orders(LocalDateTime.now())));
-
         dao.saveAllAndFlush(goods);
     }
 
     @Override
-    public void saveOrders(Orders orders) {
+    public void updateOrder(Long orderId, Long goodsId) {
+
+        Orders orders = getOrderById(orderId).orElse(null);
+
+        Goods goods = getGoodsById(goodsId).orElse(null);
+
+        assert orders != null;
+        orders.addGoodsToDepartment(goods);
+
+        ordersDao.saveAndFlush(orders);
+    }
+
+    @Override
+    public void deleteGoods(Long id) {
+
+        dao.deleteById(id);
+    }
+
+    @Override
+    public void saveOrder(Orders orders) {
 
         orders.setDocDate(LocalDateTime.now());
-
 
         ordersDao.saveAndFlush(orders);
     }
@@ -43,9 +56,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(Goods goods) {
 
-//        goods.setOrders(new Orders(LocalDateTime.now()));
-
         goods.setPrice(goods.getPrice() * goods.getQuantity());
+
+        if (goods.getQuantity() == 0) {
+            deleteGoods(goods.getId());
+        }
 
         dao.saveAndFlush(goods);
     }
@@ -69,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Orders> getByIdOrders(Long id) {
+    public Optional<Orders> getOrderById(Long id) {
 
         return ordersDao.findById(id);
     }
@@ -84,11 +99,5 @@ public class ProductServiceImpl implements ProductService {
     public List<Orders> getAllOrdersById(Long id) {
 
         return ordersDao.findAllById(Collections.singleton(id));
-    }
-
-    @Override
-    public List<Orders> getDate(String text) {
-
-        return ordersDao.getDate(text);
     }
 }
