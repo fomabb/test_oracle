@@ -43,8 +43,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(Goods goods) {
 
-//        goods.setOrders(new Orders(LocalDateTime.now()));
-
         goods.setPrice(goods.getPrice() * goods.getQuantity());
 
         dao.saveAndFlush(goods);
