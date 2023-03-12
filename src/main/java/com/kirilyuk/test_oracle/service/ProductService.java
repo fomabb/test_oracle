@@ -8,24 +8,31 @@ import java.util.Optional;
 
 public interface ProductService {
 
+//    ***************Goods***************
+
     void createNewProduct(List<Goods> goods);
 
     List<Goods> getAllProduct();
 
-    List<Orders> getOrdersTable();
+    void update(Goods goods);
 
     Optional<Goods> getGoodsById(Long id);
 
-    void update(Goods goods);
-
-    Optional<Orders> getByIdOrders(Long id);
-
     double weight();
+
+    void deleteGoods(Long id);
+
+//    ***************Orders***************
+
+    void saveOrder(Orders orders);
+
+    void saveOrders(Long orderId, Long goodsId);
+
+    List<Orders> getOrdersTable();
+
+    Optional<Orders> getOrderById(Long id);
+
 
     List<Orders> getAllOrdersById(Long id);
 
-
-    void saveOrders(Long id, Orders orders);
-
-    void deleteGoods(Long id);
 }

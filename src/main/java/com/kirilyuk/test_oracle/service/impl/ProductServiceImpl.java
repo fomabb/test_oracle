@@ -27,13 +27,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveOrders(Long id, Orders orders) {
+    public void saveOrders(Long orderId, Long goodsId) {
 
-        Goods goods = getGoodsById(id).orElse(null);
+        Orders orders = getOrderById(orderId).orElse(null);
 
+        Goods goods = getGoodsById(goodsId).orElse(null);
+
+        assert orders != null;
         orders.addGoodsToDepartment(goods);
-
-        orders.setDocDate(LocalDateTime.now());
 
         ordersDao.saveAndFlush(orders);
     }
@@ -42,6 +43,14 @@ public class ProductServiceImpl implements ProductService {
     public void deleteGoods(Long id) {
 
         dao.deleteById(id);
+    }
+
+    @Override
+    public void saveOrder(Orders orders) {
+
+        orders.setDocDate(LocalDateTime.now());
+
+        ordersDao.saveAndFlush(orders);
     }
 
     @Override
@@ -75,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Orders> getByIdOrders(Long id) {
+    public Optional<Orders> getOrderById(Long id) {
 
         return ordersDao.findById(id);
     }

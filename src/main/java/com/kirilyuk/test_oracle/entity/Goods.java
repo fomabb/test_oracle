@@ -1,7 +1,6 @@
 package com.kirilyuk.test_oracle.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,13 +24,5 @@ public class Goods {
     private double price;
 
     @Column(name = "quantity")
-//    @Min(value = 1, message = "product is not exist")
-    private long quantity ;
-
-//*************************************************************
-
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "order_id")
-//    private Orders orders;
-
+    private long quantity;
 }

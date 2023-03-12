@@ -27,7 +27,7 @@ public class Orders {
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id")
-    private Set<Goods> goods;
+    private Set<Goods> goods = new HashSet<>();
 
     public void addGoodsToDepartment(Goods goods) {
 
