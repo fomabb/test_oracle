@@ -1,6 +1,7 @@
 package com.kirilyuk.test_oracle.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,15 +26,16 @@ public class Orders {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime docDate;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    @JsonIgnore
+    @OneToMany(mappedBy = "order")
     private Set<Goods> goods;
 
-    public void addGoodsToDepartment(Goods goods) {
+    public void addGoodsToDepartment(Goods good) {
 
-        if (this.goods == null) {
-            this.goods = new HashSet<>();
+        if (goods == null) {
+            goods = new HashSet<>();
         }
-        this.goods.add(goods);
+        goods.add(good);
+        good.setOrder(this);
     }
 }
