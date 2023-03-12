@@ -99,12 +99,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public double weight() {
-
-        return ordersDao.findAll().stream().count() / dao.findAll().stream().count();
-    }
-
-    @Override
     public List<Orders> getAllOrdersById(Long id) {
 
         return ordersDao.findAllById(Collections.singleton(id));

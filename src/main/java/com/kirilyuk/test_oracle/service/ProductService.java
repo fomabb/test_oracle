@@ -18,8 +18,6 @@ public interface ProductService {
 
     Optional<Goods> getGoodsById(Long id);
 
-    double weight();
-
     void deleteGoods(Long id);
 
 //    ***************Orders***************

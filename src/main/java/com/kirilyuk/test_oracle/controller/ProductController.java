@@ -48,12 +48,6 @@ public class ProductController {
         return service.getGoodsById(id);
     }
 
-    @GetMapping("/weight")
-    public double getWeight() {
-
-        return service.weight();
-    }
-
     @DeleteMapping("/delete/goods/{id}")
     public void deleteGoods(@PathVariable("id") Long id) {
 
