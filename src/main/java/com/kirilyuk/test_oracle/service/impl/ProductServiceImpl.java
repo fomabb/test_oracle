@@ -33,6 +33,11 @@ public class ProductServiceImpl implements ProductService {
 
         Goods goods = getGoodsById(goodsId).orElse(null);
 
+        assert goods != null;
+        if (goods.getQuantity() < 1) {
+           goods.setQuantity(1);
+        }
+
         assert orders != null;
         orders.addGoodsToDepartment(goods);
 
@@ -56,9 +61,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(Goods goods) {
 
-        goods.setPrice(goods.getPrice() * goods.getQuantity());
-
-        if (goods.getQuantity() == 0) {
+        if (goods.getQuantity() == 1) {
+            goods.setPrice(goods.getPrice() * goods.getQuantity());
+        } else if (goods.getQuantity() < 1) {
             deleteGoods(goods.getId());
         }
 
