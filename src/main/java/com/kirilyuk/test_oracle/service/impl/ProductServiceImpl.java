@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +34,6 @@ public class ProductServiceImpl implements ProductService {
     public void addGoodsInOrder(Long orderId, Long goodsId) {
 
         Orders orders = getOrderById(orderId).orElse(null);
-
         Goods goods = getGoodsById(goodsId).orElse(null);
 
         assert goods != null;
@@ -112,5 +112,17 @@ public class ProductServiceImpl implements ProductService {
     public void deleteOrder(Long id) {
 
         ordersDao.deleteById(id);
+    }
+
+    @Override
+    public List<Goods> getAllOrdersById(Long id) {
+
+        return dao.getAllOrdersById(id);
+    }
+
+    @Override
+    public List<Goods> search(String text) {
+
+        return dao.search(text);
     }
 }

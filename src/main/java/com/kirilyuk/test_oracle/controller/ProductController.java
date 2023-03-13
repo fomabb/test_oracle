@@ -60,6 +60,12 @@ public class ProductController {
         service.deleteGoods(id);
     }
 
+    @GetMapping("/search")
+    public List<Goods> search(@RequestParam("text") String text) {
+
+        return service.search(text);
+    }
+
     //    ***************Orders***************
 
     @PostMapping("/save/order")
@@ -105,5 +111,11 @@ public class ProductController {
         String formatDateTime = now.format(formatter);
 
         return "Order with id:" + id + " was deleted " + formatDateTime;
+    }
+
+    @GetMapping("/orders/all/{id}")
+    public List<Goods> getAllOrdersById(@PathVariable("id") Long id) {
+
+        return service.getAllOrdersById(id);
     }
 }

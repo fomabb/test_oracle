@@ -33,4 +33,8 @@ public interface ProductService {
     Optional<Orders> getOrderById(Long id);
 
     void deleteOrder(Long id);
+
+    List<Goods> getAllOrdersById(Long id);
+
+    List<Goods> search(String text);
 }
