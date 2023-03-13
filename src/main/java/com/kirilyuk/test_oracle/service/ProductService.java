@@ -29,4 +29,6 @@ public interface ProductService {
     List<Orders> getOrdersTable();
 
     Optional<Orders> getOrderById(Long id);
+
+    void deleteOrder(Long id);
 }

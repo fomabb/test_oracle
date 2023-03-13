@@ -6,11 +6,8 @@ import com.kirilyuk.test_oracle.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.crypto.Data;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,5 +87,17 @@ public class ProductController {
     public List<Orders> getOrdersTable() {
 
         return service.getOrdersTable();
+    }
+
+    @DeleteMapping("/delete/order/{id}")
+    public String deleteOrder(@PathVariable("id") Long id) {
+
+        service.deleteOrder(id);
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String formatDateTime = now.format(formatter);
+
+        return "Order with id:" + id + " was deleted " + formatDateTime;
     }
 }

@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
         Goods goods = getGoodsById(goodsId).orElse(null);
 
         assert goods != null;
-        if (goods.getQuantity() < 1) {
+        if (goods.getQuantity() != 1) {
             goods.setQuantity(1);
         }
 
@@ -96,5 +97,11 @@ public class ProductServiceImpl implements ProductService {
     public Optional<Orders> getOrderById(Long id) {
 
         return ordersDao.findById(id);
+    }
+
+    @Override
+    public void deleteOrder(Long id) {
+
+        ordersDao.deleteById(id);
     }
 }
