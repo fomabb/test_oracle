@@ -14,6 +14,8 @@ public interface ProductService {
 
     List<Goods> getAllGootsOrder();
 
+    List<Goods> getAllGoods();
+
     void update(Goods goods);
 
     Optional<Goods> getGoodsById(Long id);
@@ -31,6 +33,4 @@ public interface ProductService {
     Optional<Orders> getOrderById(Long id);
 
     void deleteOrder(Long id);
-
-    List<Goods> getAllGoods();
 }

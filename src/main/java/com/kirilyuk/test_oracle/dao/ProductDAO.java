@@ -12,4 +12,7 @@ public interface ProductDAO extends JpaRepository<Goods, Long> {
 
     @Query("select g from Goods g where g.order=null ")
     List<Goods> getAllGoods();
+
+    @Query("select g from Goods g where g.order!=null ")
+    List<Goods> getAllGootsOrder();
 }

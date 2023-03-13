@@ -81,7 +81,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Goods> getAllGootsOrder() {
 
-        return dao.findAll();
+        return dao.getAllGootsOrder();
+    }
+
+    @Override
+    public List<Goods> getAllGoods() {
+
+        return dao.getAllGoods();
     }
 
     @Override
@@ -106,11 +112,5 @@ public class ProductServiceImpl implements ProductService {
     public void deleteOrder(Long id) {
 
         ordersDao.deleteById(id);
-    }
-
-    @Override
-    public List<Goods> getAllGoods() {
-
-        return dao.getAllGoods();
     }
 }
