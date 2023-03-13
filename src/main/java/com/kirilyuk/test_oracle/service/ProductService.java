@@ -12,7 +12,7 @@ public interface ProductService {
 
     void createNewProduct(List<Goods> goods);
 
-    List<Goods> getAllProduct();
+    List<Goods> getAllGootsOrder();
 
     void update(Goods goods);
 
@@ -31,4 +31,6 @@ public interface ProductService {
     Optional<Orders> getOrderById(Long id);
 
     void deleteOrder(Long id);
+
+    List<Goods> getAllGoods();
 }

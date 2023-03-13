@@ -72,13 +72,14 @@ public class ProductServiceImpl implements ProductService {
             goods.setPrice(goods.getPrice() * goods.getQuantity());
         } else {
             deleteGoods(goods.getId());
+            goods.setOrder(null);
         }
 
         dao.saveAndFlush(goods);
     }
 
     @Override
-    public List<Goods> getAllProduct() {
+    public List<Goods> getAllGootsOrder() {
 
         return dao.findAll();
     }
@@ -105,5 +106,11 @@ public class ProductServiceImpl implements ProductService {
     public void deleteOrder(Long id) {
 
         ordersDao.deleteById(id);
+    }
+
+    @Override
+    public List<Goods> getAllGoods() {
+
+        return dao.getAllGoods();
     }
 }

@@ -36,10 +36,16 @@ public class ProductController {
         return goods;
     }
 
-    @GetMapping("/goods/all")
-    public List<Goods> getAllProduct() {
+    @GetMapping("/goods/order/all")
+    public List<Goods> getAllGootsOrder() {
 
-        return service.getAllProduct();
+        return service.getAllGootsOrder();
+    }
+
+    @GetMapping("/goods/all")
+    public List<Goods> getAllGoods() {
+
+        return service.getAllGoods();
     }
 
     @GetMapping("/goods/{id}")
