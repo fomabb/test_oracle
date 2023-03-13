@@ -20,6 +20,12 @@ public class ProductController {
 
 //    ***************Goods***************
 
+    @GetMapping("/goods/all")
+    public List<Goods> findGoodsAll(Long id) {
+
+        return service.findGoodsAll(id);
+    }
+
     @PostMapping("/goods/save")
     public List<Goods> createNewProduct(@RequestBody List<Goods> goods) {
 

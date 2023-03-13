@@ -125,4 +125,16 @@ public class ProductServiceImpl implements ProductService {
 
         return dao.search(text);
     }
+
+    @Override
+    public List<Goods> findGoodsAll(Long id) {
+
+         dao.findAll().stream().count();
+         getGoodsById(id);
+         getOrderById(id);
+         ordersDao.countOrder(id);
+
+         return null;
+
+    }
 }

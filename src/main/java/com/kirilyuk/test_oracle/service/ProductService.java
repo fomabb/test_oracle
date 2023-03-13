@@ -37,4 +37,6 @@ public interface ProductService {
     List<Goods> getAllOrdersById(Long id);
 
     List<Goods> search(String text);
+
+    List<Goods> findGoodsAll(Long id);
 }
