@@ -24,10 +24,10 @@ public class Goods {
     private double price;
 
     @Column(name = "quantity")
-//    @Min(value = 1, message = "product is not exist")
-    private long quantity ;
+    private long quantity;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER,
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders order;
 

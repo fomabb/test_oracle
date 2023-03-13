@@ -66,6 +66,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(Goods goods) {
 
+        Orders order = new Orders();
+
         if (goods.getQuantity() >= 1) {
             goods.setPrice(goods.getPrice() * goods.getQuantity());
         } else {

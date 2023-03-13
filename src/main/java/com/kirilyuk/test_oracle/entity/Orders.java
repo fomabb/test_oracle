@@ -27,7 +27,7 @@ public class Orders {
     private LocalDateTime docDate;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<Goods> goods;
 
     public void addGoodsToDepartment(Goods good) {
@@ -38,4 +38,10 @@ public class Orders {
         goods.add(good);
         good.setOrder(this);
     }
+
+//    public void removeGoods(Goods good) {
+//
+//        goods.remove(good);
+//        good.setOrder(null);
+//    }
 }
