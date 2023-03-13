@@ -42,7 +42,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         assert orders != null;
-        orders.addGoodsToDepartment(goods);
+        orders.addGoodsToOrder(goods);
 
         orders.setDocDate(LocalDateTime.now());
 
