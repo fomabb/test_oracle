@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductDAO dao;
     private final OrdersDAO ordersDao;
-    private EntityManager manager;
+    private final EntityManager manager;
 
     @Override
     public void createNewProduct(List<Goods> goods) {
@@ -70,8 +70,8 @@ public class ProductServiceImpl implements ProductService {
         if (goods.getQuantity() >= 1) {
             goods.setPrice(goods.getPrice() * goods.getQuantity());
         } else {
-//            manager.createNativeQuery("ALTER SEQUENCE goods_id_seq RESTART WITH 1").executeUpdate();
             deleteGoods(goods.getId());
+            manager.createNativeQuery("ALTER SEQUENCE goods_id_seq RESTART WITH 1").executeUpdate();
             goods.setOrder(null);
         }
 

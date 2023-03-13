@@ -1,5 +1,6 @@
 package com.kirilyuk.test_oracle.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -26,7 +27,7 @@ public class Orders {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime docDate;
 
-    @JsonIgnore
+    @JsonBackReference
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private Set<Goods> goods;
 
