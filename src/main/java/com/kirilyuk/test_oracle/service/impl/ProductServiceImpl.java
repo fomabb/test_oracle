@@ -5,12 +5,13 @@ import com.kirilyuk.test_oracle.dao.ProductDAO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +22,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductDAO dao;
     private final OrdersDAO ordersDao;
+    private EntityManager manager;
 
     @Override
     public void createNewProduct(List<Goods> goods) {
@@ -66,11 +68,10 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(Goods goods) {
 
-        Orders order = new Orders();
-
         if (goods.getQuantity() >= 1) {
             goods.setPrice(goods.getPrice() * goods.getQuantity());
         } else {
+//            manager.createNativeQuery("ALTER SEQUENCE goods_id_seq RESTART WITH 1").executeUpdate();
             deleteGoods(goods.getId());
             goods.setOrder(null);
         }
