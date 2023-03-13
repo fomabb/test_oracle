@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,39 +24,24 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void createNewProduct(List<Goods> goods) {
 
+        goods.forEach(goods1 -> goods1.setQuantity(1));
+
         dao.saveAllAndFlush(goods);
     }
 
-
-    /*
-    Goods goods = dao.findById(goodsId).orElse(null);
-
-        if (goods == null) {
-            return false;
-        }
-
-        Orders orders = ordersDao.findById(orderId).orElse(null);
-
-        if (orders == null) {
-            return false;
-        }
-
-        GoodsInOrder goodsInOrder = new GoodsInOrder();
-
-        goodsInOrder.setOrders(orders);
-        goodsInOrder.setGoods(goods);
-
-//        dao.saveAndFlush(goodsInOrder);
-
-        return true;
-     */
-
     @Override
-    public void saveOrders(Long goodsId, Orders orders) {
+    public void addGoodsInOrder(Long orderId, Long goodsId) {
+
+        Orders orders = getOrderById(orderId).orElse(null);
 
         Goods goods = getGoodsById(goodsId).orElse(null);
 
+        assert goods != null;
+        if (goods.getQuantity() != 1) {
+            goods.setQuantity(1);
+        }
 
+        assert orders != null;
         orders.addGoodsToDepartment(goods);
 
         orders.setDocDate(LocalDateTime.now());
@@ -70,11 +56,19 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public void saveOrder(Orders orders) {
+
+        orders.setDocDate(LocalDateTime.now());
+
+        ordersDao.saveAndFlush(orders);
+    }
+
+    @Override
     public void update(Goods goods) {
 
-        goods.setPrice(goods.getPrice() * goods.getQuantity());
-
-        if (goods.getQuantity() == 0) {
+        if (goods.getQuantity() >= 1) {
+            goods.setPrice(goods.getPrice() * goods.getQuantity());
+        } else {
             deleteGoods(goods.getId());
         }
 
@@ -100,20 +94,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Orders> getByIdOrders(Long id) {
+    public Optional<Orders> getOrderById(Long id) {
 
         return ordersDao.findById(id);
     }
 
     @Override
-    public double weight() {
+    public void deleteOrder(Long id) {
 
-        return ordersDao.findAll().stream().count() / dao.findAll().stream().count();
-    }
-
-    @Override
-    public List<Orders> getAllOrdersById(Long id) {
-
-        return ordersDao.findAllById(Collections.singleton(id));
+        ordersDao.deleteById(id);
     }
 }
