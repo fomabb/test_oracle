@@ -27,6 +27,7 @@ public class Goods {
     private double price;
 
     @Column(name = "quantity")
+
     private int quantity;
 
     @JsonBackReference
@@ -45,4 +46,6 @@ public class Goods {
     public Goods(int quantity) {
         this.quantity = quantity;
     }
+
+    private long quantity;
 }

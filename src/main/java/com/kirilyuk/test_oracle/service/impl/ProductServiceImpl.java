@@ -6,12 +6,15 @@ import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -22,6 +25,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductDAO dao;
     private final OrdersDAO ordersDao;
+    private final EntityManager manager;
+
 
 //    *******************************************************Goods******************************************************
 
@@ -36,7 +41,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void addGoodsInOrder(Long orderId, Long goodsId) {
 
-        Orders orders = ordersDao.findById(orderId).orElse(null);
+        Orders orders = getOrderById(orderId).orElse(null);
+
         Goods goods = getGoodsById(goodsId).orElse(null);
 
         assert goods != null;
@@ -45,7 +51,10 @@ public class ProductServiceImpl implements ProductService {
         }
 
         assert orders != null;
+
         orders.addGoodsToOrder(goods);
+
+        orders.addGoodsToDepartment(goods);
 
         orders.setDocDate(LocalDateTime.now());
 
@@ -59,6 +68,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+
     public List<Goods> getAllOrdersById(Long id) {
 
         return dao.getAllOrdersById(id);
@@ -66,6 +76,22 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void saveOrder(Orders orders) {
+
+        orders.setDocDate(LocalDateTime.now());
+
+        ordersDao.saveAndFlush(orders);
+    }
+
+    @Override
+    public void update(Goods goods) {
+
+        if (goods.getQuantity() >= 1) {
+            goods.setPrice(goods.getPrice() * goods.getQuantity());
+        } else {
+            deleteGoods(goods.getId());
+            manager.createNativeQuery("ALTER SEQUENCE goods_id_seq RESTART WITH 1").executeUpdate();
+        }
+
 
         orders.setDocDate(LocalDateTime.now());
 
@@ -107,6 +133,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+
     public List<Orders> getOrdersTable() {
 
         return ordersDao.findAll();
@@ -114,6 +141,7 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
+
     public Optional<Orders> getOrderById(Long id) {
 
         return ordersDao.findById(id);
@@ -121,6 +149,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteOrder(Long id) {
+
 
         ordersDao.deleteById(id);
     }
@@ -149,5 +178,8 @@ public class ProductServiceImpl implements ProductService {
             return new QuantityUpdateDTO(good.getId(), good.getQuantity());
         }
         return quantity;
+
+        ordersDao.deleteById(id);
+
     }
 }
