@@ -37,5 +37,5 @@ public interface ProductService {
 
     QuantityUpdateDTO updateQuantity(Long id, QuantityUpdateDTO quantity);
 
-    List<Double> registry(Long id);
+    List<Double> registry(Long orderId);
 }

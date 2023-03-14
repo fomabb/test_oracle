@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void addGoodsInOrder(Long orderId, Long goodsId) {
 
-        Orders orders = getOrderById(orderId).orElse(null);
+        Orders orders = ordersDao.findById(orderId).orElse(null);
         Goods goods = getGoodsById(goodsId).orElse(null);
 
         assert goods != null;
@@ -94,10 +94,10 @@ public class ProductServiceImpl implements ProductService {
 
 
     @Override
-    public List<Double> registry(Long id) {
+    public List<Double> registry(Long orderId) {
 
         double sumPrice = dao.sumPrice();
-        double weight = (dao.countGoods(id) / dao.sumQuantity());
+        double weight = (dao.countGoods(orderId) / dao.sumQuantity());
 
         List<Double> registryList = new ArrayList<>();
         registryList.add(sumPrice);
@@ -115,10 +115,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Optional<Orders> getOrderById(Long id) {
-
-        registry(id);
-
-        dao.countGoods(id);
 
         return ordersDao.findById(id);
     }

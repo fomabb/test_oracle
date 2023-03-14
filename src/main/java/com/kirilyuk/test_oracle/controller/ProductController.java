@@ -114,10 +114,16 @@ public class ProductController {
 
     @PutMapping("/update/quantity/{id}")
     public QuantityUpdateDTO updateQuantity(@PathVariable("id") Long id,
-                               @RequestBody QuantityUpdateDTO quantity) {
+                                            @RequestBody QuantityUpdateDTO quantity) {
 
         service.updateQuantity(id, quantity);
 
         return quantity;
+    }
+
+    @GetMapping("/registry/{orderId}")
+    public List<Double> registry(@PathVariable("orderId") Long orderId) {
+
+        return service.registry(orderId);
     }
 }
