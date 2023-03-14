@@ -80,41 +80,6 @@ public class ProductServiceImpl implements ProductService {
         dao.saveAndFlush(goods);
     }
 
-    /*
-    ToDo
-     */
-    @Override
-    public void orderUpdateGoods(Orders order, Goods goods) {
-
-        getAllOrdersById(goods.getId());
-
-        if (goods.getQuantity() >= 1) {
-            goods.setPrice(goods.getPrice() * goods.getQuantity());
-        } else {
-            deleteGoods(goods.getId());
-            goods.setOrder(null);
-//            manager.createNativeQuery("ALTER SEQUENCE goods_id_seq RESTART WITH 1").executeUpdate();
-        }
-
-        assert order != null;
-        order.addGoodsToOrder(goods);
-
-        ordersDao.saveAndFlush(order);
-    }
-
-    /*
-    ToDo
-     */
-    @Modifying(flushAutomatically = true)
-    @Override
-    public void updateQuantity(QuantityUpdate quantity, Long id) {
-
-        getGoodsById(id).get();
-        quantity.setQuantity(quantity.getQuantity());
-
-        dao.updateQuantity(quantity, id);
-    }
-
     @Override
     public List<Goods> getAllGootsOrder() {
 
@@ -154,7 +119,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Goods> getAllOrdersById(Long id) {
 
-        return dao.getOrdersById(id);
+        return dao.getAllOrdersById(id);
     }
 
     @Override
@@ -164,20 +129,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Orders> getOrdersInfo(Long id) {
+    public List<Goods> findGoodsAll(Long id) {
 
-        return ordersDao.getOrdersInfo(id);
+         dao.findAll().stream().count();
+         getGoodsById(id);
+         getOrderById(id);
+         ordersDao.countOrder(id);
+
+         return null;
+
     }
-
-//    @Override
-//    public List<Goods> findGoodsAll(Long id) {
-//
-//         dao.findAll().stream().count();
-//         getGoodsById(id);
-//         getOrderById(id);
-//         ordersDao.countOrder(id);
-//
-//         return null;
-//
-//    }
 }

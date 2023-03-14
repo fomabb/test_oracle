@@ -1,6 +1,5 @@
 package com.kirilyuk.test_oracle.controller;
 
-import com.kirilyuk.test_oracle.dto.QuantityUpdate;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
@@ -20,6 +19,12 @@ public class ProductController {
     private final ProductService service;
 
 //    ***************Goods***************
+
+    @GetMapping("/goods/all")
+    public List<Goods> findGoodsAll(Long id) {
+
+        return service.findGoodsAll(id);
+    }
 
     @PostMapping("/goods/save")
     public List<Goods> createNewProduct(@RequestBody List<Goods> goods) {
@@ -90,19 +95,6 @@ public class ProductController {
         return "Product with id:" + goodsId + " added to cart " + formatDateTime;
     }
 
-    /*
-    ToDo
-     */
-    @PutMapping("/order/update/goods")
-    public Orders orderUpdateGoods(@RequestBody Orders order,
-                                   @RequestBody Goods goods,
-                                   Long id) {
-
-        service.orderUpdateGoods(order, goods);
-
-        return order;
-    }
-
     @GetMapping("/order/{id}")
     public Optional<Orders> getOrderById(@PathVariable("id") Long id) {
 
@@ -131,21 +123,5 @@ public class ProductController {
     public List<Goods> getAllOrdersById(@PathVariable("id") Long id) {
 
         return service.getAllOrdersById(id);
-    }
-
-    @GetMapping("orders/info/{id}")
-    public List<Orders> getOrdersInfo(@PathVariable("id") Long id) {
-
-        return service.getOrdersInfo(id);
-    }
-
-    /*
-    ToDo
-     */
-    @PutMapping("/update/quantity/{id}")
-    public void updateQuantity(@RequestBody QuantityUpdate quantity,
-                               @PathVariable("id") Long id) {
-
-        service.updateQuantity(quantity, id);
     }
 }
