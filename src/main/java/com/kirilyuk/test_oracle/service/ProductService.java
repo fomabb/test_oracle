@@ -46,4 +46,8 @@ public interface ProductService {
      */
     List<Orders> getOrdersInfo(Long id);
 
+    /*
+    ToDo
+     */
+    void orderUpdateGoods(Orders order, Long id);
 }

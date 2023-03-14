@@ -27,9 +27,7 @@ public class Goods {
     private int quantity;
 
     @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL
-//            {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
-    )
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders order;
 }

@@ -75,7 +75,30 @@ public class ProductServiceImpl implements ProductService {
 //            manager.createNativeQuery("ALTER SEQUENCE goods_id_seq RESTART WITH 1").executeUpdate();
         }
 
-        dao.saveAndFlush(goods);
+        dao.save(goods);
+    }
+
+    /*
+    ToDo
+     */
+    @Override
+    public void orderUpdateGoods(Orders order, Long id) {
+
+        Goods goods = getGoodsById(id).orElse(null);
+
+        assert goods != null;
+        if (goods.getQuantity() >= 1) {
+            goods.setPrice(goods.getPrice() * goods.getQuantity());
+        } else {
+            deleteGoods(goods.getId());
+            goods.setOrder(null);
+//            manager.createNativeQuery("ALTER SEQUENCE goods_id_seq RESTART WITH 1").executeUpdate();
+        }
+
+        assert order != null;
+        order.addGoodsToOrder(goods);
+
+        ordersDao.saveAndFlush(order);
     }
 
     @Override

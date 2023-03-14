@@ -89,6 +89,17 @@ public class ProductController {
         return "Product with id:" + goodsId + " added to cart " + formatDateTime;
     }
 
+    /*
+    ToDo
+     */
+    @PutMapping("/order/update/goods")
+    public Orders orderUpdateGoods(@RequestBody Orders order, Long id) {
+
+        service.orderUpdateGoods(order, id);
+
+        return order;
+    }
+
     @GetMapping("/order/{id}")
     public Optional<Orders> getOrderById(@PathVariable("id") Long id) {
 
