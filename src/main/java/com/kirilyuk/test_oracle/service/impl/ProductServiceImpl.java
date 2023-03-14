@@ -2,11 +2,13 @@ package com.kirilyuk.test_oracle.service.impl;
 
 import com.kirilyuk.test_oracle.dao.OrdersDAO;
 import com.kirilyuk.test_oracle.dao.ProductDAO;
+import com.kirilyuk.test_oracle.dto.QuantityUpdate;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,18 +77,17 @@ public class ProductServiceImpl implements ProductService {
 //            manager.createNativeQuery("ALTER SEQUENCE goods_id_seq RESTART WITH 1").executeUpdate();
         }
 
-        dao.save(goods);
+        dao.saveAndFlush(goods);
     }
 
     /*
     ToDo
      */
     @Override
-    public void orderUpdateGoods(Orders order, Long id) {
+    public void orderUpdateGoods(Orders order, Goods goods) {
 
-        Goods goods = getGoodsById(id).orElse(null);
+        getAllOrdersById(goods.getId());
 
-        assert goods != null;
         if (goods.getQuantity() >= 1) {
             goods.setPrice(goods.getPrice() * goods.getQuantity());
         } else {
@@ -99,6 +100,19 @@ public class ProductServiceImpl implements ProductService {
         order.addGoodsToOrder(goods);
 
         ordersDao.saveAndFlush(order);
+    }
+
+    /*
+    ToDo
+     */
+    @Modifying(flushAutomatically = true)
+    @Override
+    public void updateQuantity(QuantityUpdate quantity, Long id) {
+
+        getGoodsById(id).get();
+        quantity.setQuantity(quantity.getQuantity());
+
+        dao.updateQuantity(quantity, id);
     }
 
     @Override

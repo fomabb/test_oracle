@@ -1,5 +1,6 @@
 package com.kirilyuk.test_oracle.controller;
 
+import com.kirilyuk.test_oracle.dto.QuantityUpdate;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
@@ -93,9 +94,11 @@ public class ProductController {
     ToDo
      */
     @PutMapping("/order/update/goods")
-    public Orders orderUpdateGoods(@RequestBody Orders order, Long id) {
+    public Orders orderUpdateGoods(@RequestBody Orders order,
+                                   @RequestBody Goods goods,
+                                   Long id) {
 
-        service.orderUpdateGoods(order, id);
+        service.orderUpdateGoods(order, goods);
 
         return order;
     }
@@ -134,5 +137,15 @@ public class ProductController {
     public List<Orders> getOrdersInfo(@PathVariable("id") Long id) {
 
         return service.getOrdersInfo(id);
+    }
+
+    /*
+    ToDo
+     */
+    @PutMapping("/update/quantity/{id}")
+    public void updateQuantity(@RequestBody QuantityUpdate quantity,
+                               @PathVariable("id") Long id) {
+
+        service.updateQuantity(quantity, id);
     }
 }

@@ -1,5 +1,6 @@
 package com.kirilyuk.test_oracle.service;
 
+import com.kirilyuk.test_oracle.dto.QuantityUpdate;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 
@@ -49,5 +50,7 @@ public interface ProductService {
     /*
     ToDo
      */
-    void orderUpdateGoods(Orders order, Long id);
+    void orderUpdateGoods(Orders order, Goods goods);
+
+    void updateQuantity(QuantityUpdate quantity, Long id);
 }

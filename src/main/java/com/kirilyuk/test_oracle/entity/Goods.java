@@ -1,14 +1,16 @@
 package com.kirilyuk.test_oracle.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "goods")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Goods {
 
@@ -30,4 +32,10 @@ public class Goods {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders order;
+
+    public Goods(String goodCode, double price, int quantity) {
+        this.goodCode = goodCode;
+        this.price = price;
+        this.quantity = quantity;
+    }
 }

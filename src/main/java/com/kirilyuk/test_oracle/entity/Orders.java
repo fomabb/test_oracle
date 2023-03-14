@@ -1,9 +1,10 @@
 package com.kirilyuk.test_oracle.entity;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,7 +12,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Orders {
 
@@ -25,6 +27,10 @@ public class Orders {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Goods> goods = new ArrayList<>();
+
+    public Orders(LocalDateTime docDate) {
+        this.docDate = docDate;
+    }
 
     public void addGoodsToOrder(Goods good) {
 
