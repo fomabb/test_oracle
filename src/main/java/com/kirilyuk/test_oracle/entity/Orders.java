@@ -26,7 +26,7 @@ public class Orders {
     private LocalDateTime docDate;
 
     @OneToMany(mappedBy = "order"
-//            , cascade = CascadeType.ALL
+            , cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
             , fetch = FetchType.EAGER)
     private List<Goods> goods = new ArrayList<>();
 

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface ProductService {
 
-//    ***************Goods***************
+//    *******************************************************Goods******************************************************
 
     void createNewProduct(List<Goods> goods);
 
@@ -19,7 +19,7 @@ public interface ProductService {
 
     void deleteGoods(Long id);
 
-//    ***************Orders***************
+//    *******************************************************Orders*****************************************************
 
     void saveOrder(Orders orders);
 
@@ -37,5 +37,5 @@ public interface ProductService {
 
     QuantityUpdateDTO updateQuantity(Long id, QuantityUpdateDTO quantity);
 
-//    List<Goods> findGoodsAll(Long id);
+    List<Double> registry(Long id);
 }

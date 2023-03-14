@@ -31,7 +31,7 @@ public class Goods {
 
     @JsonBackReference
     @ManyToOne(
-//            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
     )
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders order;

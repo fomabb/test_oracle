@@ -6,12 +6,12 @@ import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +22,8 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductDAO dao;
     private final OrdersDAO ordersDao;
-    private final EntityManager manager;
+
+//    *******************************************************Goods******************************************************
 
     @Override
     public void createNewProduct(List<Goods> goods) {
@@ -52,9 +53,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteGoods(Long id) {
+    public Optional<Goods> getGoodsById(Long id) {
 
-        dao.deleteById(id);
+        return dao.findById(id);
+    }
+
+    @Override
+    public List<Goods> getAllOrdersById(Long id) {
+
+        return dao.getAllOrdersById(id);
     }
 
     @Override
@@ -72,19 +79,46 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Goods> search(String text) {
+
+        return dao.search(text);
+    }
+
+    @Override
+    public void deleteGoods(Long id) {
+
+        dao.deleteById(id);
+    }
+
+//    *******************************************************Orders*****************************************************
+
+
+    @Override
+    public List<Double> registry(Long id) {
+
+        double sumPrice = dao.sumPrice();
+        double weight = (dao.countGoods(id) / dao.sumQuantity());
+
+        List<Double> registryList = new ArrayList<>();
+        registryList.add(sumPrice);
+        registryList.add(weight);
+
+        return registryList;
+    }
+
+    @Override
     public List<Orders> getOrdersTable() {
 
         return ordersDao.findAll();
     }
 
-    @Override
-    public Optional<Goods> getGoodsById(Long id) {
-
-        return dao.findById(id);
-    }
 
     @Override
     public Optional<Orders> getOrderById(Long id) {
+
+        registry(id);
+
+        dao.countGoods(id);
 
         return ordersDao.findById(id);
     }
@@ -93,18 +127,6 @@ public class ProductServiceImpl implements ProductService {
     public void deleteOrder(Long id) {
 
         ordersDao.deleteById(id);
-    }
-
-    @Override
-    public List<Goods> getAllOrdersById(Long id) {
-
-        return dao.getOrdersById(id);
-    }
-
-    @Override
-    public List<Goods> search(String text) {
-
-        return dao.search(text);
     }
 
     @Override

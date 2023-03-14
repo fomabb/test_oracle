@@ -21,7 +21,7 @@ public class ProductController {
 
     private final ProductService service;
 
-//    ***************Goods***************
+//    *******************************************************Goods******************************************************
 
     @PostMapping("/goods/save")
     public List<Goods> createNewProduct(@RequestBody List<Goods> goods) {
@@ -55,7 +55,7 @@ public class ProductController {
         return service.search(text);
     }
 
-    //    ***************Orders***************
+//    *******************************************************Orders*****************************************************
 
     @PostMapping("/save/order")
     public Orders saveOrder(@RequestBody Orders orders) {
@@ -86,6 +86,10 @@ public class ProductController {
 
     @GetMapping("/orders")
     public List<Orders> getOrdersTable() {
+
+        Orders order = new Orders();
+
+        getAllOrdersById(order.getId());
 
         return service.getOrdersTable();
     }
