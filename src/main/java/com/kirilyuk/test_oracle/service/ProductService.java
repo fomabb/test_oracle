@@ -9,15 +9,21 @@ import java.util.Optional;
 
 public interface ProductService {
 
+
 //    *******************************************************Goods******************************************************
+
+    void createNewProduct(List<Goods> goods);
 
     void createNewProduct(List<Goods> goods);
 
     List<Goods> getAllGoods();
 
+    void update(Goods goods);
+
     Optional<Goods> getGoodsById(Long id);
 
     void deleteGoods(Long id);
+
 
 //    *******************************************************Orders*****************************************************
 
