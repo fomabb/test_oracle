@@ -117,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Goods> getAllOrdersById(Long id) {
 
-        return dao.getAllOrdersById(id);
+        return dao.getOrdersById(id);
     }
 
     @Override
@@ -127,14 +127,20 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Goods> findGoodsAll(Long id) {
+    public List<Orders> getOrdersInfo(Long id) {
 
-         dao.findAll().stream().count();
-         getGoodsById(id);
-         getOrderById(id);
-         ordersDao.countOrder(id);
-
-         return null;
-
+        return ordersDao.getOrdersInfo(id);
     }
+
+//    @Override
+//    public List<Goods> findGoodsAll(Long id) {
+//
+//         dao.findAll().stream().count();
+//         getGoodsById(id);
+//         getOrderById(id);
+//         ordersDao.countOrder(id);
+//
+//         return null;
+//
+//    }
 }

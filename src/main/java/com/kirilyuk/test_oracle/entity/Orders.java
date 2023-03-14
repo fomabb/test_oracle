@@ -1,21 +1,17 @@
 package com.kirilyuk.test_oracle.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Orders {
 
@@ -27,22 +23,15 @@ public class Orders {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime docDate;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<Goods> goods;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Goods> goods = new ArrayList<>();
 
     public void addGoodsToOrder(Goods good) {
 
         if (goods == null) {
-            goods = new HashSet<>();
+            goods = new ArrayList<>();
         }
         goods.add(good);
         good.setOrder(this);
     }
-
-//    public void removeGoods(Goods good) {
-//
-//        goods.remove(good);
-//        good.setOrder(null);
-//    }
 }

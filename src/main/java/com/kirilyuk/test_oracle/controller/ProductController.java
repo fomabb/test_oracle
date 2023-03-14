@@ -20,12 +20,6 @@ public class ProductController {
 
 //    ***************Goods***************
 
-    @GetMapping("/goods/all")
-    public List<Goods> findGoodsAll(Long id) {
-
-        return service.findGoodsAll(id);
-    }
-
     @PostMapping("/goods/save")
     public List<Goods> createNewProduct(@RequestBody List<Goods> goods) {
 
@@ -123,5 +117,11 @@ public class ProductController {
     public List<Goods> getAllOrdersById(@PathVariable("id") Long id) {
 
         return service.getAllOrdersById(id);
+    }
+
+    @GetMapping("orders/info/{id}")
+    public List<Orders> getOrdersInfo(@PathVariable("id") Long id) {
+
+        return service.getOrdersInfo(id);
     }
 }
