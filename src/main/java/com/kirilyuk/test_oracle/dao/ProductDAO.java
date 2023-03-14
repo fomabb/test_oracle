@@ -1,6 +1,6 @@
 package com.kirilyuk.test_oracle.dao;
 
-import com.kirilyuk.test_oracle.dto.QuantityUpdate;
+import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -35,6 +34,6 @@ public interface ProductDAO extends JpaRepository<Goods, Long> {
 
     @Transactional
     @Modifying(flushAutomatically = true)
-    @Query(value = "UPDATE goods g SET quantity=? WHERE g.id=:id", nativeQuery = true)
-    void updateQuantity(QuantityUpdate quantity, @Param("id") Long id);
+    @Query("UPDATE Goods g SET g.quantity=:quantity WHERE g.id=:id")
+    void updateQuantity(@Param("id") Long id, QuantityUpdateDTO quantity);
 }

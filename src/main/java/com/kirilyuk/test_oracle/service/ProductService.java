@@ -1,5 +1,6 @@
 package com.kirilyuk.test_oracle.service;
 
+import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 
@@ -12,11 +13,7 @@ public interface ProductService {
 
     void createNewProduct(List<Goods> goods);
 
-    List<Goods> getAllGootsOrder();
-
     List<Goods> getAllGoods();
-
-    void update(Goods goods);
 
     Optional<Goods> getGoodsById(Long id);
 
@@ -38,5 +35,7 @@ public interface ProductService {
 
     List<Goods> search(String text);
 
-    List<Goods> findGoodsAll(Long id);
+    QuantityUpdateDTO updateQuantity(Long id, QuantityUpdateDTO quantity);
+
+//    List<Goods> findGoodsAll(Long id);
 }

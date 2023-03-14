@@ -2,13 +2,12 @@ package com.kirilyuk.test_oracle.service.impl;
 
 import com.kirilyuk.test_oracle.dao.OrdersDAO;
 import com.kirilyuk.test_oracle.dao.ProductDAO;
-import com.kirilyuk.test_oracle.dto.QuantityUpdate;
+import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,26 +66,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void update(Goods goods) {
-
-        if (goods.getQuantity() >= 1) {
-            goods.setPrice(goods.getPrice() * goods.getQuantity());
-        } else {
-            deleteGoods(goods.getId());
-            goods.setOrder(null);
-//            manager.createNativeQuery("ALTER SEQUENCE goods_id_seq RESTART WITH 1").executeUpdate();
-        }
-
-        dao.saveAndFlush(goods);
-    }
-
-    @Override
-    public List<Goods> getAllGootsOrder() {
-
-        return dao.getAllGootsOrder();
-    }
-
-    @Override
     public List<Goods> getAllGoods() {
 
         return dao.getAllGoods();
@@ -119,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Goods> getAllOrdersById(Long id) {
 
-        return dao.getAllOrdersById(id);
+        return dao.getOrdersById(id);
     }
 
     @Override
@@ -129,14 +108,28 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Goods> findGoodsAll(Long id) {
+    public QuantityUpdateDTO updateQuantity(Long id, QuantityUpdateDTO quantity) {
 
-         dao.findAll().stream().count();
-         getGoodsById(id);
-         getOrderById(id);
-         ordersDao.countOrder(id);
+        Orders orders = new Orders();
 
-         return null;
+        if (dao.findById(id).isPresent()) {
+            Goods goods = dao.findById(id).get();
 
+            goods.setPrice((goods.getPrice()) / goods.getQuantity());
+
+            goods.setQuantity(quantity.getQuantity());
+
+            if (goods.getQuantity() >= 1) {
+                goods.setPrice(goods.getPrice() * goods.getQuantity());
+            } else {
+                orders.deleteToOrder(goods);
+
+                goods.setOrder(null);
+            }
+
+            Goods good = dao.save(goods);
+            return new QuantityUpdateDTO(good.getId(), good.getQuantity());
+        }
+        return quantity;
     }
 }

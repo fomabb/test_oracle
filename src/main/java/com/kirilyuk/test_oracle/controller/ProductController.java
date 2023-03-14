@@ -1,9 +1,11 @@
 package com.kirilyuk.test_oracle.controller;
 
+import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -14,17 +16,12 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Transactional
 public class ProductController {
 
     private final ProductService service;
 
 //    ***************Goods***************
-
-    @GetMapping("/goods/all")
-    public List<Goods> findGoodsAll(Long id) {
-
-        return service.findGoodsAll(id);
-    }
 
     @PostMapping("/goods/save")
     public List<Goods> createNewProduct(@RequestBody List<Goods> goods) {
@@ -32,20 +29,6 @@ public class ProductController {
         service.createNewProduct(goods);
 
         return goods;
-    }
-
-    @PutMapping("/goods/update")
-    public Goods updateNewProduct(@RequestBody Goods goods) {
-
-        service.update(goods);
-
-        return goods;
-    }
-
-    @GetMapping("/goods/order/all")
-    public List<Goods> getAllGootsOrder() {
-
-        return service.getAllGootsOrder();
     }
 
     @GetMapping("/goods/all")
@@ -123,5 +106,14 @@ public class ProductController {
     public List<Goods> getAllOrdersById(@PathVariable("id") Long id) {
 
         return service.getAllOrdersById(id);
+    }
+
+    @PutMapping("/update/quantity/{id}")
+    public QuantityUpdateDTO updateQuantity(@PathVariable("id") Long id,
+                               @RequestBody QuantityUpdateDTO quantity) {
+
+        service.updateQuantity(id, quantity);
+
+        return quantity;
     }
 }

@@ -25,12 +25,10 @@ public class Orders {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime docDate;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order"
+//            , cascade = CascadeType.ALL
+            , fetch = FetchType.EAGER)
     private List<Goods> goods = new ArrayList<>();
-
-    public Orders(LocalDateTime docDate) {
-        this.docDate = docDate;
-    }
 
     public void addGoodsToOrder(Goods good) {
 
@@ -38,6 +36,11 @@ public class Orders {
             goods = new ArrayList<>();
         }
         goods.add(good);
+        good.setOrder(this);
+    }
+
+    public void deleteToOrder(Goods good) {
+        goods.remove(good);
         good.setOrder(this);
     }
 }

@@ -1,6 +1,7 @@
 package com.kirilyuk.test_oracle.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -29,13 +30,19 @@ public class Goods {
     private int quantity;
 
     @JsonBackReference
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(
+//            cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}
+    )
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private Orders order;
 
     public Goods(String goodCode, double price, int quantity) {
         this.goodCode = goodCode;
         this.price = price;
+        this.quantity = quantity;
+    }
+
+    public Goods(int quantity) {
         this.quantity = quantity;
     }
 }
