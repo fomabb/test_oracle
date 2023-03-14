@@ -1,9 +1,11 @@
 package com.kirilyuk.test_oracle.controller;
 
+import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -14,11 +16,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+
+@Transactional
 public class ProductController {
 
     private final ProductService service;
 
-//    ***************Goods***************
+
+//    *******************************************************Goods******************************************************
+
 
     @PostMapping("/goods/save")
     public List<Goods> createNewProduct(@RequestBody List<Goods> goods) {
@@ -27,6 +33,38 @@ public class ProductController {
 
         return goods;
     }
+
+
+    @GetMapping("/goods/all")
+    public List<Goods> getAllGoods() {
+
+        return service.getAllGoods();
+    }
+
+    @GetMapping("/goods/{id}")
+    public Optional<Goods> getGoodsById(@PathVariable("id") Long id) {
+
+        return service.getGoodsById(id);
+    }
+
+    @DeleteMapping("/delete/goods/{id}")
+    public void deleteGoods(@PathVariable("id") Long id) {
+
+        service.deleteGoods(id);
+    }
+
+    @GetMapping("/search")
+    public List<Goods> search(@RequestParam("text") String text) {
+
+        return service.search(text);
+    }
+
+//    *******************************************************Orders*****************************************************
+
+    @PostMapping("/save/order")
+    public Orders saveOrder(@RequestBody Orders orders) {
+
+        service.saveOrder(orders);
 
     @PutMapping("/goods/update")
     public Goods updateNewProduct(@RequestBody Goods goods) {
@@ -39,7 +77,28 @@ public class ProductController {
     @GetMapping("/goods/all")
     public List<Goods> getAllProduct() {
 
+
         return service.getAllProduct();
+    }
+
+
+    @PutMapping("/add/order/{orderId}/goods/{goodsId}")
+    public String addGoodsInOrder(@PathVariable("orderId") Long orderId,
+                                  @PathVariable("goodsId") Long goodsId) {
+
+        service.addGoodsInOrder(orderId, goodsId);
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String formatDateTime = now.format(formatter);
+
+        return "Product with id:" + goodsId + " added to cart " + formatDateTime;
+    }
+
+    @GetMapping("/order/{id}")
+    public Optional<Orders> getOrderById(@PathVariable("id") Long id) {
+
+        return service.getOrderById(id);
     }
 
     @GetMapping("/goods/{id}")
@@ -61,6 +120,19 @@ public class ProductController {
 
         service.saveOrder(orders);
 
+
+        Orders order = new Orders();
+
+        getAllOrdersById(order.getId());
+
+        return service.getOrdersTable();
+    }
+
+    @DeleteMapping("/delete/order/{id}")
+    public String deleteOrder(@PathVariable("id") Long id) {
+
+        service.deleteOrder(id);
+
         return orders;
     }
 
@@ -74,14 +146,36 @@ public class ProductController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String formatDateTime = now.format(formatter);
 
+        return "Order with id:" + id + " was deleted " + formatDateTime;
+    }
+
+    @GetMapping("/orders/all/{id}")
+    public List<Goods> getAllOrdersById(@PathVariable("id") Long id) {
+
         return "Product with id:" + goodsId + " added to cart " + formatDateTime;
     }
 
     @GetMapping("/order/{id}")
     public Optional<Orders> getOrderById(@PathVariable("id") Long id) {
 
+
         return service.getOrderById(id);
     }
+
+
+    @PutMapping("/update/quantity/{id}")
+    public QuantityUpdateDTO updateQuantity(@PathVariable("id") Long id,
+                                            @RequestBody QuantityUpdateDTO quantity) {
+
+        service.updateQuantity(id, quantity);
+
+        return quantity;
+    }
+
+    @GetMapping("/registry/{orderId}")
+    public List<Double> registry(@PathVariable("orderId") Long orderId) {
+
+        return service.registry(orderId);
 
     @GetMapping("/orders")
     public List<Orders> getOrdersTable() {

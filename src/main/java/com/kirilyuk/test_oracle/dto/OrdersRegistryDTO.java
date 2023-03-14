@@ -9,13 +9,11 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrdersReportDTO {
+public class OrdersRegistryDTO {
 
     private Long id;
 
-    private LocalDateTime date;
-
-    private long quantity;
+    private int quantity;
 
     private double price;
 }

@@ -1,5 +1,6 @@
 package com.kirilyuk.test_oracle.service;
 
+import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 
@@ -8,11 +9,14 @@ import java.util.Optional;
 
 public interface ProductService {
 
-//    ***************Goods***************
+
+//    *******************************************************Goods******************************************************
 
     void createNewProduct(List<Goods> goods);
 
-    List<Goods> getAllProduct();
+    void createNewProduct(List<Goods> goods);
+
+    List<Goods> getAllGoods();
 
     void update(Goods goods);
 
@@ -20,7 +24,8 @@ public interface ProductService {
 
     void deleteGoods(Long id);
 
-//    ***************Orders***************
+
+//    *******************************************************Orders*****************************************************
 
     void saveOrder(Orders orders);
 
@@ -31,4 +36,12 @@ public interface ProductService {
     Optional<Orders> getOrderById(Long id);
 
     void deleteOrder(Long id);
+
+    List<Goods> getAllOrdersById(Long id);
+
+    List<Goods> search(String text);
+
+    QuantityUpdateDTO updateQuantity(Long id, QuantityUpdateDTO quantity);
+
+    List<Double> registry(Long orderId);
 }
