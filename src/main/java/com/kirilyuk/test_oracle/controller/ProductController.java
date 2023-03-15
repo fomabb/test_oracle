@@ -22,9 +22,7 @@ public class ProductController {
 
     private final ProductService service;
 
-
 //    *******************************************************Goods******************************************************
-
 
     @PostMapping("/goods/save")
     public List<Goods> createNewProduct(@RequestBody List<Goods> goods) {
@@ -33,7 +31,6 @@ public class ProductController {
 
         return goods;
     }
-
 
     @GetMapping("/goods/all")
     public List<Goods> getAllGoods() {
@@ -66,73 +63,6 @@ public class ProductController {
 
         service.saveOrder(orders);
 
-    @PutMapping("/goods/update")
-    public Goods updateNewProduct(@RequestBody Goods goods) {
-
-        service.update(goods);
-
-        return goods;
-    }
-
-    @GetMapping("/goods/all")
-    public List<Goods> getAllProduct() {
-
-
-        return service.getAllProduct();
-    }
-
-
-    @PutMapping("/add/order/{orderId}/goods/{goodsId}")
-    public String addGoodsInOrder(@PathVariable("orderId") Long orderId,
-                                  @PathVariable("goodsId") Long goodsId) {
-
-        service.addGoodsInOrder(orderId, goodsId);
-
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        String formatDateTime = now.format(formatter);
-
-        return "Product with id:" + goodsId + " added to cart " + formatDateTime;
-    }
-
-    @GetMapping("/order/{id}")
-    public Optional<Orders> getOrderById(@PathVariable("id") Long id) {
-
-        return service.getOrderById(id);
-    }
-
-    @GetMapping("/goods/{id}")
-    public Optional<Goods> getGoodsById(@PathVariable("id") Long id) {
-
-        return service.getGoodsById(id);
-    }
-
-    @DeleteMapping("/delete/goods/{id}")
-    public void deleteGoods(@PathVariable("id") Long id) {
-
-        service.deleteGoods(id);
-    }
-
-    //    ***************Orders***************
-
-    @PostMapping("/save/order")
-    public Orders saveOrder(@RequestBody Orders orders) {
-
-        service.saveOrder(orders);
-
-
-        Orders order = new Orders();
-
-        getAllOrdersById(order.getId());
-
-        return service.getOrdersTable();
-    }
-
-    @DeleteMapping("/delete/order/{id}")
-    public String deleteOrder(@PathVariable("id") Long id) {
-
-        service.deleteOrder(id);
-
         return orders;
     }
 
@@ -146,22 +76,42 @@ public class ProductController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String formatDateTime = now.format(formatter);
 
-        return "Order with id:" + id + " was deleted " + formatDateTime;
-    }
-
-    @GetMapping("/orders/all/{id}")
-    public List<Goods> getAllOrdersById(@PathVariable("id") Long id) {
-
         return "Product with id:" + goodsId + " added to cart " + formatDateTime;
     }
 
     @GetMapping("/order/{id}")
     public Optional<Orders> getOrderById(@PathVariable("id") Long id) {
 
-
         return service.getOrderById(id);
     }
 
+    @GetMapping("/orders")
+    public List<Orders> getOrdersTable() {
+
+        Orders order = new Orders();
+
+        getAllOrdersById(order.getId());
+
+        return service.getOrdersTable();
+    }
+
+    @DeleteMapping("/delete/order/{id}")
+    public String deleteOrder(@PathVariable("id") Long id) {
+
+        service.deleteOrder(id);
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String formatDateTime = now.format(formatter);
+
+        return "Order with id:" + id + " was deleted " + formatDateTime;
+    }
+
+    @GetMapping("/orders/all/{id}")
+    public List<Goods> getAllOrdersById(@PathVariable("id") Long id) {
+
+        return service.getAllOrdersById(id);
+    }
 
     @PutMapping("/update/quantity/{id}")
     public QuantityUpdateDTO updateQuantity(@PathVariable("id") Long id,
@@ -176,22 +126,5 @@ public class ProductController {
     public List<Double> registry(@PathVariable("orderId") Long orderId) {
 
         return service.registry(orderId);
-
-    @GetMapping("/orders")
-    public List<Orders> getOrdersTable() {
-
-        return service.getOrdersTable();
-    }
-
-    @DeleteMapping("/delete/order/{id}")
-    public String deleteOrder(@PathVariable("id") Long id) {
-
-        service.deleteOrder(id);
-
-        LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-        String formatDateTime = now.format(formatter);
-
-        return "Order with id:" + id + " was deleted " + formatDateTime;
     }
 }

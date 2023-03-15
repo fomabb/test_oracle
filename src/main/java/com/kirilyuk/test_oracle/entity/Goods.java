@@ -2,14 +2,12 @@ package com.kirilyuk.test_oracle.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "goods")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Goods {
 
@@ -25,7 +23,6 @@ public class Goods {
     private double price;
 
     @Column(name = "quantity")
-
     private int quantity;
 
     @JsonBackReference
@@ -44,6 +41,4 @@ public class Goods {
     public Goods(int quantity) {
         this.quantity = quantity;
     }
-
-    private long quantity;
 }

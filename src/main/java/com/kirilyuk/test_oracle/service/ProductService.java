@@ -14,11 +14,7 @@ public interface ProductService {
 
     void createNewProduct(List<Goods> goods);
 
-    void createNewProduct(List<Goods> goods);
-
     List<Goods> getAllGoods();
-
-    void update(Goods goods);
 
     Optional<Goods> getGoodsById(Long id);
 

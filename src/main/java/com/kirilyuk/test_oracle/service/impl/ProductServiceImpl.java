@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
 
         orders.addGoodsToOrder(goods);
 
-        orders.addGoodsToDepartment(goods);
+        orders.addGoodsToOrder(goods);
 
         orders.setDocDate(LocalDateTime.now());
 
@@ -76,22 +76,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void saveOrder(Orders orders) {
-
-        orders.setDocDate(LocalDateTime.now());
-
-        ordersDao.saveAndFlush(orders);
-    }
-
-    @Override
-    public void update(Goods goods) {
-
-        if (goods.getQuantity() >= 1) {
-            goods.setPrice(goods.getPrice() * goods.getQuantity());
-        } else {
-            deleteGoods(goods.getId());
-            manager.createNativeQuery("ALTER SEQUENCE goods_id_seq RESTART WITH 1").executeUpdate();
-        }
-
 
         orders.setDocDate(LocalDateTime.now());
 
@@ -178,8 +162,6 @@ public class ProductServiceImpl implements ProductService {
             return new QuantityUpdateDTO(good.getId(), good.getQuantity());
         }
         return quantity;
-
-        ordersDao.deleteById(id);
 
     }
 }
