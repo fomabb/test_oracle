@@ -115,9 +115,9 @@ public class ProductServiceImpl implements ProductService {
 
         registryDTO.setNumberOrder(orderId);
         registryDTO.setNumbersGoods(dao.getAllOrdersById(orderId));
-        registryDTO.setQuantity(sumQuantity);
-        registryDTO.setPriceAllGoods(sumPrice);
-        registryDTO.setWeightAllGoods(weight);
+        registryDTO.setQuantityAllOrder(sumQuantity);
+        registryDTO.setPriceAllOrder(sumPrice);
+        registryDTO.setWeightAllOrder(weight);
 
         return registryDTO;
     }

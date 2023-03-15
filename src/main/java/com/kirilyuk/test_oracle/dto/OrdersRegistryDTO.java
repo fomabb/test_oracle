@@ -17,9 +17,9 @@ public class OrdersRegistryDTO {
 
     private List<Goods> numbersGoods = new ArrayList<>();
 
-    private int quantity;
+    private int quantityAllOrder;
 
-    private double weightAllGoods;
+    private double weightAllOrder;
 
-    private double priceAllGoods;
+    private double priceAllOrder;
 }
