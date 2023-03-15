@@ -20,11 +20,12 @@ public interface ProductDAO extends JpaRepository<Goods, Long> {
     @Query(value = "select * from goods g where g.order_id=?1", nativeQuery = true)
     List<Goods> getAllOrdersById(@Param("id") Long id);
 
-    @Query("select sum (price) from Goods")
-    double sumPrice();
+    @Query(value = "select sum (price) from goods g where g.order_id=:id", nativeQuery = true)
+    double sumPrice(@Param("id") Long id);
 
-    @Query("select sum (quantity) from Goods")
-    double sumQuantity();
+
+    @Query(value = "select sum (g.quantity) from goods g where g.order_id=:id", nativeQuery = true)
+    double sumQuantity(@Param("id") Long id);
 
     @Query(value = "select count(*) from goods g where g.order_id=?1", nativeQuery = true)
     int countGoods(@Param("id") Long id);

@@ -1,5 +1,6 @@
 package com.kirilyuk.test_oracle.controller;
 
+import com.kirilyuk.test_oracle.dto.OrdersRegistryDTO;
 import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
@@ -123,7 +124,7 @@ public class ProductController {
     }
 
     @GetMapping("/registry/{orderId}")
-    public List<Double> registry(@PathVariable("orderId") Long orderId) {
+    public OrdersRegistryDTO registry(@PathVariable("orderId") Long orderId) {
 
         return service.registry(orderId);
     }

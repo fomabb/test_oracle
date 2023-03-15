@@ -2,6 +2,7 @@ package com.kirilyuk.test_oracle.service.impl;
 
 import com.kirilyuk.test_oracle.dao.OrdersDAO;
 import com.kirilyuk.test_oracle.dao.ProductDAO;
+import com.kirilyuk.test_oracle.dto.OrdersRegistryDTO;
 import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
@@ -102,18 +103,23 @@ public class ProductServiceImpl implements ProductService {
 
 //    *******************************************************Orders*****************************************************
 
-
     @Override
-    public List<Double> registry(Long orderId) {
+    public OrdersRegistryDTO registry (Long orderId) {
+        ordersDao.findById(orderId).orElseThrow();
 
-        double sumPrice = dao.sumPrice();
-        double weight = (dao.countGoods(orderId) / dao.sumQuantity());
+        double sumPrice = dao.sumPrice(orderId);
+        int sumQuantity = (int) dao.sumQuantity(orderId);
+        double weight = (dao.countGoods(orderId) / dao.sumQuantity(orderId));
 
-        List<Double> registryList = new ArrayList<>();
-        registryList.add(sumPrice);
-        registryList.add(weight);
+        OrdersRegistryDTO registryDTO = new OrdersRegistryDTO();
 
-        return registryList;
+        registryDTO.setNumberOrder(orderId);
+        registryDTO.setNumbersGoods(dao.getAllOrdersById(orderId));
+        registryDTO.setQuantity(sumQuantity);
+        registryDTO.setPriceAllGoods(sumPrice);
+        registryDTO.setWeightAllGoods(weight);
+
+        return registryDTO;
     }
 
     @Override
@@ -162,6 +168,5 @@ public class ProductServiceImpl implements ProductService {
             return new QuantityUpdateDTO(good.getId(), good.getQuantity());
         }
         return quantity;
-
     }
 }
