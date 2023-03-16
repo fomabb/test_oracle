@@ -1,5 +1,6 @@
 package com.kirilyuk.test_oracle.service.impl;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kirilyuk.test_oracle.dao.OrdersDAO;
 import com.kirilyuk.test_oracle.dao.ProductDAO;
 import com.kirilyuk.test_oracle.dto.OrdersRegistryDTO;
@@ -8,14 +9,18 @@ import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
 import jakarta.persistence.EntityManager;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -106,6 +111,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public OrdersRegistryDTO registry (Long orderId) {
         ordersDao.findById(orderId).orElseThrow();
+        Orders orders = new Orders();
 
         double sumPrice = dao.sumPrice(orderId);
         int sumQuantity = (int) dao.sumQuantity(orderId);
@@ -114,6 +120,7 @@ public class ProductServiceImpl implements ProductService {
         OrdersRegistryDTO registryDTO = new OrdersRegistryDTO();
 
         registryDTO.setNumberOrder(orderId);
+        registryDTO.setDate(dao.date(orderId));
         registryDTO.setNumbersGoods(dao.getAllOrdersById(orderId));
         registryDTO.setQuantityAllOrder(sumQuantity);
         registryDTO.setPriceAllOrder(sumPrice);
