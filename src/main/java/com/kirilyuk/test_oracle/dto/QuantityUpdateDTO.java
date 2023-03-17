@@ -3,16 +3,12 @@ package com.kirilyuk.test_oracle.dto;
 import java.util.Objects;
 
 public class QuantityUpdateDTO {
-
-    private Long id;
-
     private int quantity;
 
     public QuantityUpdateDTO() {
     }
 
-    public QuantityUpdateDTO(Long id, int quantity) {
-        this.id = id;
+    public QuantityUpdateDTO(int quantity) {
         this.quantity = quantity;
     }
 
