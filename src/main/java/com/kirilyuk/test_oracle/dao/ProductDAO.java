@@ -14,9 +14,6 @@ public interface ProductDAO extends JpaRepository<Goods, Long> {
     @Query("select g from Goods g where g.order=null ")
     List<Goods> getAllGoods();
 
-    @Query("select g from Goods g where g.order!=null ")
-    List<Goods> getAllGootsOrder();
-
     @Query(value = "select * from goods g where g.order_id=?1", nativeQuery = true)
     List<Goods> getAllOrdersById(@Param("id") Long id);
 
