@@ -101,9 +101,8 @@ public class ProductServiceImpl implements ProductService {
 //    *******************************************************Orders*****************************************************
 
     @Override
-    public OrdersRegistryDTO registry (Long orderId) {
+    public OrdersRegistryDTO registry(Long orderId) {
         ordersDao.findById(orderId).orElseThrow();
-        Orders orders = new Orders();
 
         double sumPrice = dao.sumPrice(orderId);
         int sumQuantity = (int) dao.sumQuantity(orderId);

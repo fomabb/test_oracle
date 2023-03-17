@@ -46,9 +46,15 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/goods/{id}")
-    public void deleteGoods(@PathVariable("id") Long id) {
+    public String deleteGoods(@PathVariable("id") Long id) {
 
         service.deleteGoods(id);
+
+        LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String formatDateTime = now.format(formatter);
+
+        return "Good with id:" + id + " was deleted " + formatDateTime;
     }
 
     @GetMapping("/search")
