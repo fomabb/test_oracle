@@ -158,7 +158,6 @@ public class ProductServiceImpl implements ProductService {
                 goods.setPrice(goods.getPrice() * goods.getQuantity());
             } else {
                 orders.deleteToOrder(goods);
-
                 goods.setOrder(null);
                 goods.setQuantity(1);
             }

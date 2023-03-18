@@ -12,12 +12,6 @@ import java.util.List;
 @Repository
 public interface OrdersDAO extends JpaRepository<Orders, Long> {
 
-//    @Query("select sum(g.price) from Goods g where g.order=:id")
-//    List<Orders> countOrder(@PathVariable("id") Long id);
-
-    /*
-    ToDo
-     */
     @Query("select o from Orders o where o.goods=:id")
     List<Orders> getOrdersInfo(@Param("id") Long id);
 }
