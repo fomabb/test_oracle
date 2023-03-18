@@ -3,3 +3,4 @@
 /target/
 src/main/resources/static/
 src/main/resources/templates/
+src/main/resources/database.properties/
