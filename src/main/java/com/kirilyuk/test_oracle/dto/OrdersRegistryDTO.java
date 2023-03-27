@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +19,7 @@ public class OrdersRegistryDTO {
     private Long numberOrder;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm")
-    private Date date;
+    private LocalDateTime date;
 
     private List<Goods> numbersGoods = new ArrayList<>();
 
