@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,17 +24,20 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductDAO dao;
     private final OrdersDAO ordersDao;
-    private final EntityManager manager;
-
 
 //    *******************************************************Goods******************************************************
 
+    /**
+     * ToDo
+     */
     @Override
     public void createNewProduct(List<Goods> goods) {
 
-        goods.forEach(goods1 -> goods1.setQuantity(1));
+        if (isExist(goods.stream().map(Goods::getGoodCode).toString())) {
+            goods.forEach(g -> g.setQuantity(1));
 
-        dao.saveAllAndFlush(goods);
+            dao.saveAllAndFlush(goods);
+        }
     }
 
     @Override
@@ -96,6 +100,25 @@ public class ProductServiceImpl implements ProductService {
     public void deleteGoods(Long id) {
 
         dao.deleteById(id);
+    }
+
+
+    /**
+     * ToDo
+     * @return
+     */
+    @Override
+    public boolean isExist(String  good) {
+
+        List<Goods> goods = dao.findAll();
+
+        for (Goods g : goods) {
+            if (g.getGoodCode().equals(good)) {
+                return true;
+            }
+        }
+        throw new RuntimeException("Such a product exists");
+//        return false;
     }
 
 //    *******************************************************Orders*****************************************************

@@ -21,6 +21,7 @@ public interface ProductService {
 
     void deleteGoods(Long id);
 
+    boolean isExist(String  good);
 
 //    *******************************************************Orders*****************************************************
 
