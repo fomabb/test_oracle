@@ -7,13 +7,14 @@ import com.kirilyuk.test_oracle.entity.Orders;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ProductService {
 
 
 //    *******************************************************Goods******************************************************
 
-    void createNewProduct(List<Goods> goods);
+    void createNewProduct(Set<Goods> goods);
 
     List<Goods> getAllGoods();
 
@@ -42,4 +43,6 @@ public interface ProductService {
     QuantityUpdateDTO updateQuantity(Long id, QuantityUpdateDTO quantity);
 
     OrdersRegistryDTO registry(Long orderId);
+
+    void test(Goods goods);
 }

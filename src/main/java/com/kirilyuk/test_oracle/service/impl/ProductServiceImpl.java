@@ -7,15 +7,15 @@ import com.kirilyuk.test_oracle.dto.QuantityUpdateDTO;
 import com.kirilyuk.test_oracle.entity.Goods;
 import com.kirilyuk.test_oracle.entity.Orders;
 import com.kirilyuk.test_oracle.service.ProductService;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,13 +31,43 @@ public class ProductServiceImpl implements ProductService {
      * ToDo
      */
     @Override
-    public void createNewProduct(List<Goods> goods) {
+    public void createNewProduct(Set<Goods> goods) {
 
-        if (isExist(goods.stream().map(Goods::getGoodCode).toString())) {
+        if (!isExist(goods.stream().map(Goods::getGoodCode).toString())) {
             goods.forEach(g -> g.setQuantity(1));
 
             dao.saveAllAndFlush(goods);
+//        } else {
+//        throw new RuntimeException("Such a product exists");
         }
+    }
+
+    /**
+     * ToDo
+     */
+    @Override
+    public void test(Goods goods) {
+
+        if (!isExist(goods.getGoodCode())) {
+            dao.saveAndFlush(goods);
+        }
+    }
+
+    /**
+     * ToDo
+     */
+    @Override
+    public boolean isExist(String  good) {
+
+        List<Goods> goods = dao.findAll();
+
+        for (Goods g : goods) {
+            if (g.getGoodCode().equals(good)) {
+                return true;
+            }
+        }
+//        throw new RuntimeException("Such a product exists");
+        return false;
     }
 
     @Override
@@ -102,24 +132,6 @@ public class ProductServiceImpl implements ProductService {
         dao.deleteById(id);
     }
 
-
-    /**
-     * ToDo
-     * @return
-     */
-    @Override
-    public boolean isExist(String  good) {
-
-        List<Goods> goods = dao.findAll();
-
-        for (Goods g : goods) {
-            if (g.getGoodCode().equals(good)) {
-                return true;
-            }
-        }
-        throw new RuntimeException("Such a product exists");
-//        return false;
-    }
 
 //    *******************************************************Orders*****************************************************
 

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api")
@@ -25,8 +26,16 @@ public class ProductController {
 
 //    *******************************************************Goods******************************************************
 
+    @PostMapping("/goods/save/test")
+    public Goods createNewProduct(@RequestBody Goods goods) {
+
+        service.test(goods);
+
+        return goods;
+    }
+
     @PostMapping("/goods/save")
-    public List<Goods> createNewProduct(@RequestBody List<Goods> goods) {
+    public Set<Goods> createNewProduct(@RequestBody Set<Goods> goods) {
 
         service.createNewProduct(goods);
 
